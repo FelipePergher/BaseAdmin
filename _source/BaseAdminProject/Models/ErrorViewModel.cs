@@ -1,5 +1,3 @@
-using System;
-
 namespace BaseAdminProject.Models
 {
     public class ErrorViewModel
