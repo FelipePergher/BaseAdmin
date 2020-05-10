@@ -94,17 +94,44 @@
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA0001" Action="None" />
+    <Rule Id="SA1005" Action="Error" />
+    <Rule Id="SA1009" Action="Error" />
+    <Rule Id="SA1028" Action="Error" />
     <Rule Id="SA1100" Action="Error" />
     <Rule Id="SA1101" Action="None" />
+    <Rule Id="SA1106" Action="Error" />
+    <Rule Id="SA1107" Action="Error" />
+    <Rule Id="SA1111" Action="Error" />
+    <Rule Id="SA1116" Action="Error" />
+    <Rule Id="SA1117" Action="Error" />
+    <Rule Id="SA1118" Action="Error" />
+    <Rule Id="SA1122" Action="Error" />
+    <Rule Id="SA1123" Action="None" />
+    <Rule Id="SA1124" Action="None" />
+    <Rule Id="SA1127" Action="Error" />
+    <Rule Id="SA1128" Action="Error" />
+    <Rule Id="SA1133" Action="Error" />
     <Rule Id="SA1208" Action="None" />
-    <Rule Id="SA1305" Action="Warning" />
+    <Rule Id="SA1210" Action="Error" />
+    <Rule Id="SA1300" Action="Error" />
     <Rule Id="SA1309" Action="None" />
+    <Rule Id="SA1313" Action="Error" />
     <Rule Id="SA1412" Action="Error" />
     <Rule Id="SA1413" Action="None" />
+    <Rule Id="SA1500" Action="Error" />
+    <Rule Id="SA1502" Action="Error" />
+    <Rule Id="SA1505" Action="Error" />
+    <Rule Id="SA1507" Action="Error" />
+    <Rule Id="SA1508" Action="Error" />
     <Rule Id="SA1513" Action="Error" />
     <Rule Id="SA1515" Action="Error" />
+    <Rule Id="SA1516" Action="Error" />
+    <Rule Id="SA1518" Action="Error" />
     <Rule Id="SA1600" Action="None" />
     <Rule Id="SA1601" Action="None" />
     <Rule Id="SA1609" Action="Warning" />
+    <Rule Id="SA1633" Action="Error" />
+    <Rule Id="SA1636" Action="Error" />
+    <Rule Id="SA1641" Action="Error" />
   </Rules>
 </RuleSet>
