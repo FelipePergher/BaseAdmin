@@ -1,4 +1,8 @@
-﻿using BaseAdminProject.Models;
+﻿// <copyright file="HomeController.cs" company="Felipe Pergher">
+// Copyright (c) Felipe Pergher. All Rights Reserved.
+// </copyright>
+
+using BaseAdminProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;

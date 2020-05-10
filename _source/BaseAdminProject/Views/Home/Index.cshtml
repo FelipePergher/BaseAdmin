@@ -5,4 +5,35 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <button type="button" id="teste">teste</button>
+    
+    <iframe src="https://localhost:44327/Home/Privacy" style="display:none;" name="frame"></iframe>
+
+    <input type="button" onclick="frames['frame'].print()" value="printletter">
 </div>
+
+
+@section Scripts{
+    <script>
+        $("#teste").click(function() {
+            printExternal("https://localhost:44327/Home/Privacy");
+        });
+
+
+        function printExternal(url) {
+            var printWindow = window.open( url, 'Print', 'left=200, top=200, width=950, height=500, toolbar=0, resizable=0');
+
+            printWindow.addEventListener('load', function() {
+                if (Boolean(printWindow.chrome)) {
+                    printWindow.print();
+                    setTimeout(function(){
+                        printWindow.close();
+                    }, 500);
+                } else {
+                    printWindow.print();
+                    printWindow.close();
+                }
+            }, true);
+        }
+    </script>    
+}

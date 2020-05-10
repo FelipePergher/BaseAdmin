@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿// <copyright file="00000000000000_CreateIdentitySchema.cs" company="Felipe Pergher">
+// Copyright (c) Felipe Pergher. All Rights Reserved.
+// </copyright>
+
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
