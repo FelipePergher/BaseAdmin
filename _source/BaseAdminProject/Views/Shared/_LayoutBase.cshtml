@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BaseAdminProject</title>
+
+    <environment names="Development">
+        <link href="~/dist/css/common.bundle.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/dist/css/common.bundle.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+
+    @RenderBody()
+
+    <environment names="Development">
+        <script src="~/dist/js/vendors.bundle.js"></script>
+        <script src="~/dist/js/common.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/dist/js/vendors.bundle.js" asp-append-version="true"></script>
+        <script src="~/dist/js/common.bundle.js" asp-append-version="true"></script>
+    </environment>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
