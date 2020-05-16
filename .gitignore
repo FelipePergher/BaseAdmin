@@ -32,3 +32,4 @@ msbuild.wrn
 .vs/
 _source/BaseAdminProject/node_modules/
 _source/BaseAdminProject/wwwroot/dist/
+_design/argon-dashboard-master/

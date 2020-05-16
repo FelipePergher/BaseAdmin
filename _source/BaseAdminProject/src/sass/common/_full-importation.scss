@@ -1,0 +1,188 @@
+﻿
+// Bootstrap functions
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/functions';
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/mixins";
+
+// Argon functions
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/custom/functions";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/custom/variables";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/variables";
+
+// Argon mixins
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/custom/mixins";
+
+// Bootstrap components
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/root";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/reboot";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/type";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/images";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/code";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/grid";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/tables";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/forms";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/buttons";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/transitions";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/dropdown";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/button-group";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/input-group";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/custom-forms";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/nav";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/navbar";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/card";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/breadcrumb";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/pagination";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/badge";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/jumbotron";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/alert";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/progress";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/media";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/list-group";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/close";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/modal";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/tooltip";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/popover";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/carousel";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/utilities";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/bootstrap/print";
+
+// Argon components
+/*@import '@creative-tim-official/argon-dashboard-free/assets/scss/custom/components';*/
+
+
+//
+// Components
+//
+
+// Alerts
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/alerts/alert";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/alerts/alert-dismissible";
+
+// Avatars
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/avatars/avatar";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/avatars/avatar-group";
+
+// Badges
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/badges/badge";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/badges/badge-circle";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/badges/badge-dot";
+
+// Buttons
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/buttons/button";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/buttons/button-brand";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/buttons/button-icon";
+
+// Cards
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/cards/card";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/cards/card-animations";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/cards/card-blockquote";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/cards/card-profile";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/cards/card-stats";
+
+// Charts
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/charts/chart";
+
+// Close
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/close/close";
+
+// Collapse
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/collapse/accordion";
+
+// Content
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/content/main-content";
+
+// Custom forms
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/custom-forms/custom-form";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/custom-forms/custom-control";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/custom-forms/custom-checkbox";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/custom-forms/custom-radio";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/custom-forms/custom-toggle";
+
+// Dropdowns
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/dropdowns/dropdown";
+
+// Footers
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/footers/footer";
+
+// Forms
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/forms/form";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/forms/input-group";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/forms/form-validation";
+
+// Grid
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/grid/grid";
+
+// Headers
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/headers/header";
+
+// Icons
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/icons/icon";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/icons/icon-shape";
+
+// List groups
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/list-groups/list-group";
+
+// Maps
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/maps/map";
+
+// Masks
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/masks/mask";
+
+// Modals
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/modals/modal";
+
+// Navbars
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/navbars/navbar";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/navbars/navbar-vertical";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/navbars/navbar-search";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/navbars/navbar-dropdown";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/navbars/navbar-collapse";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/navbars/navbar-top";
+
+// Navs
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/navs/nav";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/navs/nav-pills";
+
+// Paginations
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/paginations/pagination";
+
+// Popovers
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/popovers/popover";
+
+// Progresses
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/progresses/progress";
+
+// Separators
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/separators/separator";
+
+// Sections
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/sections/nucleo-icons";
+
+// Tables
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/tables/table";
+
+// Type
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/type/type";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/type/article";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/type/display";
+@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/type/heading";
+
+
+
+
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/custom/utilities';
+
+
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/bootstrap-datepicker';
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/bootstrap-tagsinput';
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/chartjs';
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/datatables';
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/dropzone';
+/*@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/fullcalendar';*/
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/jvectormap';
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/lavalamp';
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/nouislider';
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/quill';
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/scrollbar';
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/select2';
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/sweet-alert-2';
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/plugin-datetimepicker';
