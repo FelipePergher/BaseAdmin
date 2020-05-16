@@ -2,84 +2,114 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Entrar";
+    Layout = "_LayoutBase";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
+@section styles {
+    <environment names="Development">
+        <link href="~/dist/css/login.bundle.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/dist/css/login.bundle.css" asp-append-version="true" rel="stylesheet" />
+    </environment>
+}
+
+<!-- Main content -->
+<div class="main-content bg-default h-100vh">
+    <!-- Header -->
+    <div class="header bg-gradient-primary py-7">
+        <div class="container">
+            <div class="header-body text-center mb-7">
+                <div class="row justify-content-center">
+                    <div class="col-xl-5 col-lg-6 col-md-8 px-5">
+                        <h1 class="text-white">Welcome!</h1>
+                        <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                </div>
-                <div class="form-group">
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>
-            </form>
-        </section>
+            </div>
+        </div>
+        <div class="separator separator-bottom separator-skew zindex-100">
+            <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+            </svg>
+        </div>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h4>Use another service to log in.</h4>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
+
+    <!-- Page content -->
+    <div class="container mt--8 pb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7">
+                <div class="card bg-secondary border-0 mb-0">
+                    <div class="card-body px-lg-5 py-lg-5">
+                        <div class="text-center text-muted mb-4">
+                            <small>Login</small>
                         </div>
-                    </form>
-                }
-            }
-        </section>
+                        <form id="loginForm" method="post" novalidate>
+                            <div asp-validation-summary="ModelOnly" class="invalid-feedback"></div>
+
+
+                            <div class="form-group mb-3">
+                                <label asp-for="Input.Email" class="form-control-label"></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-envelope"></i>
+                                        </span>
+                                    </div>
+                                    <input asp-for="Input.Email" type="email" class="form-control" placeholder="Email">
+                                </div>
+                                <span asp-validation-for="Input.Email" class="invalid-feedback ml-5"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="Input.Password" class="form-control-label"></label>
+                                <div class="input-group mt-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-lock"></i>
+                                        </span>
+                                    </div>
+                                    <input asp-for="Input.Password" type="password" class="form-control" placeholder="Senha" id="password">
+                                    <i class="eye-password fas fa-eye-slash eyePassword"></i>
+                                </div>
+                                <span asp-validation-for="Input.Password" class="invalid-feedback ml-5"></span>
+                            </div>
+
+                            <div class="custom-control custom-control-alternative custom-checkbox mb-3">
+                                <input asp-for="Input.RememberMe" type="checkbox" class="custom-control-input" id="customControlValidation1">
+                                <label asp-for="Input.RememberMe" class="custom-control-label" for="customControlValidation1">Lembrar-me</label>
+                                <span class="invalid-feedback"></span>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary my-4" data-style="expand-right">
+                                    Entrar
+                                    <span class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="sr-only">Loading...</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <a asp-page="./ForgotPassword" class="text-light"><small>Esqueceu a senha?</small></a>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a asp-page="./ResendEmailConfirmation" class="text-light"><small>Reenviar email de confirmação</small></a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+@section scripts {
+    <environment names="Development">
+        <script src="~/dist/js/login.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/dist/js/login.bundle.js" asp-append-version="true"></script>
+    </environment>
 }

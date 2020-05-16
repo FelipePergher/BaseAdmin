@@ -4,6 +4,8 @@ import "jquery-validation-unobtrusive";
 
 export default (function () {
 
+    global.setupValidator($.validator);
+
     $(function () {
         initPage();
     });
@@ -16,12 +18,11 @@ export default (function () {
         global.eyePassword();
 
         $("#loginForm").submit(function (e) {
-            //Todo spinner
             let form = $(this);
             if (form.valid()) {
                 let submitButton = $(this).find("button[type='submit']");
                 $(submitButton).prop("disabled", "disabled").addClass("disabled");
-                $("#submitSpinner").show();
+                $(submitButton).children("span").removeClass("d-none");
             }
         });
     }

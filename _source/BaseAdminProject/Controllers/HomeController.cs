@@ -3,12 +3,14 @@
 // </copyright>
 
 using BaseAdminProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 namespace BaseAdminProject.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -23,7 +25,7 @@ namespace BaseAdminProject.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Table()
         {
             return View();
         }

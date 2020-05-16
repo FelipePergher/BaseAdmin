@@ -126,6 +126,12 @@ namespace BaseAdminProject
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            SeedData.ApplyMigrations(app.ApplicationServices);
+
+            IServiceScopeFactory scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+            SeedData.SeedRoles(scopeFactory).Wait();
+            SeedData.SeedAdminUser(scopeFactory, Configuration["Admin:Email"], Configuration["Admin:Password"]).Wait();
         }
     }
 }
