@@ -2,15 +2,20 @@
 @model EmailModel
 @{
     ViewData["Title"] = "Manage Email";
-    ViewData["ActivePage"] = ManageNavPages.Email;
 }
 
-<h4>@ViewData["Title"]</h4>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
+<div class="card">
+    <div class="card-header">
+        <div class="row align-items-center">
+            <div class="col-8">
+                <h3 class="mb-0">@ViewData["Title"]</h3>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
         <form id="email-form" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="invalid-feedback"></div>
             <div class="form-group">
                 <label asp-for="Email"></label>
                 @if (Model.IsEmailConfirmed)
@@ -22,7 +27,7 @@
                         </div>
                     </div>
                 }
-                 else
+                else
                 {
                     <input asp-for="Email" class="form-control" disabled />
                     <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
@@ -31,13 +36,9 @@
             <div class="form-group">
                 <label asp-for="Input.NewEmail"></label>
                 <input asp-for="Input.NewEmail" class="form-control" />
-                <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
+                <span asp-validation-for="Input.NewEmail" class="invalid-feedback"></span>
             </div>
             <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn btn-primary">Change email</button>
         </form>
     </div>
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
