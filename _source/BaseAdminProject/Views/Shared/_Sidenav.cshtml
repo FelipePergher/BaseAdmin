@@ -7,7 +7,7 @@
             <a class="navbar-brand" asp-action="Index" asp-controller="Home">
                 <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
-            <div class=" ml-auto ">
+            <div class="ml-auto ">
                 <!-- Sidenav toggler -->
                 <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin"
                      data-target="#sidenav-main">
@@ -19,6 +19,7 @@
                 </div>
             </div>
         </div>
+
         <div class="navbar-inner">
             <!-- Collapse -->
             <div class="collapse navbar-collapse" id="sidenav-collapse-main">
@@ -34,6 +35,12 @@
                         <a class="nav-link @Html.GetActiveClass(Context.Request, Url.Action("Table", "Home"))" asp-controller="Home" asp-action="Table">
                             <i class="fas fa-table text-primary"></i>
                             <span class="nav-link-text">Table</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @Html.GetActiveClass(Context.Request, Url.Action("Index", "User"))" asp-controller="User" asp-action="Index">
+                            <i class="fas fa-table text-primary"></i>
+                            <span class="nav-link-text">Usuários</span>
                         </a>
                     </li>
                 </ul>

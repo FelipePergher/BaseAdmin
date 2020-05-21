@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Usuários";
+}
+
+@section Styles {
+    <environment names="Development">
+        <link href="~/dist/css/user.bundle.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/dist/css/user.bundle.css" asp-append-version="true" rel="stylesheet" />
+    </environment>
+}
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">@ViewData["Title"]</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item">
+                                <a asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i></a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a asp-controller="User" asp-action="AddUser" class="btn btn-sm btn-neutral">New</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header">
+                    <h3 class="mb-0">Usuários</h3>
+                    <p class="text-sm mb-0">
+                        Usuários da aplicação
+                    </p>
+                </div>
+                <div class="table-responsive py-4">
+                    <table class="table table-flush text-center" id="userDataTable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Conta Confirmado</th>
+                                <th>Conta Bloqueada</th>
+                                <th>Regra</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <environment names="Development">
+        <script src="~/dist/js/user.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/dist/js/user.bundle.js" asp-append-version="true"></script>
+    </environment>
+}

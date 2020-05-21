@@ -41,8 +41,6 @@ export default (function () {
         }
 
         $("body").on("click", "[data-action]", function (e) {
-
-            console.log(e);
             e.preventDefault();
 
             var $this = $(this);

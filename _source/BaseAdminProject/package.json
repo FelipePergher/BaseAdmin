@@ -44,6 +44,7 @@
     "argon-dashboard": "^1.2.0",
     "bootstrap": "^4.4.1",
     "bootstrap-datepicker": "^1.9.0",
+    "bootstrap4-notify": "^4.0.3",
     "chart.js": "^2.9.3",
     "datatables.net": "^1.10.20",
     "datatables.net-bs4": "^1.10.20",

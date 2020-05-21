@@ -77,11 +77,15 @@ export default (function () {
     global.setupValidator = function (validator) {
         validator.setDefaults({
             highlight: function highlight(element) {
-                $(element).addClass('is-invalid').removeClass('is-valid');
+                if ($(element).prop('type') !== 'checkbox') {
+                    $(element).addClass('is-invalid').removeClass('is-valid');
+                }
             },
             // eslint-disable-next-line object-shorthand
             unhighlight: function unhighlight(element) {
-                $(element).addClass('is-valid').removeClass('is-invalid');
+                if ($(element).prop('type') !== 'checkbox') {
+                    $(element).addClass('is-valid').removeClass('is-invalid');
+                }
             },
             errorElement: 'span',
             errorPlacement: function errorPlacement(error, element) {
