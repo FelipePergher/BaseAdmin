@@ -97,8 +97,8 @@ export default (function () {
 
     global.eyePassword = function () {
         $(".eyePassword").click(function () {
-            let icon = $(this);
-            let inputPassword = icon.siblings("input");
+            let icon = $(this).find("i");
+            let inputPassword = $(this).siblings("input");
             if (icon.hasClass("fa-eye")) {
                 icon.removeClass("fa-eye").addClass("fa-eye-slash");
                 inputPassword.attr("type", "password");

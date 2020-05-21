@@ -47,31 +47,35 @@
                         <form id="loginForm" method="post" novalidate>
                             <div asp-validation-summary="ModelOnly" class="invalid-feedback"></div>
 
-
                             <div class="form-group mb-3">
                                 <label asp-for="Input.Email" class="form-control-label"></label>
-                                <div class="input-group">
+                                <div class="input-group input-group-merge">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                            <i class="fa fa-envelope"></i>
+                                            <i class="fas fa-user"></i>
                                         </span>
                                     </div>
                                     <input asp-for="Input.Email" type="email" class="form-control" placeholder="Email">
                                 </div>
+
                                 <span asp-validation-for="Input.Email" class="invalid-feedback ml-5"></span>
                             </div>
 
                             <div class="form-group mb-3">
                                 <label asp-for="Input.Password" class="form-control-label"></label>
-                                <div class="input-group mt-2">
+                                
+                                <div class="input-group input-group-merge">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
                                             <i class="fas fa-lock"></i>
                                         </span>
                                     </div>
-                                    <input asp-for="Input.Password" type="password" class="form-control" placeholder="Senha" id="password">
-                                    <i class="eye-password fas fa-eye-slash eyePassword"></i>
+                                    <input asp-for="Input.Password" class="form-control" placeholder="Senha">
+                                    <div class="input-group-append eye-password eyePassword">
+                                        <span class="input-group-text"><i class="fas fa-eye-slash"></i></span>
+                                    </div>
                                 </div>
+
                                 <span asp-validation-for="Input.Password" class="invalid-feedback ml-5"></span>
                             </div>
 
