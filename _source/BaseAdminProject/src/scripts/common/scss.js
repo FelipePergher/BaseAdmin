@@ -7,3 +7,4 @@ import '../../sass/forgot-password/index.scss';
 import '../../sass/resend-email/index.scss';
 import '../../sass/reset-password/index.scss';
 import '../../sass/user/index.scss';
+import '../../sass/add-user/index.scss';

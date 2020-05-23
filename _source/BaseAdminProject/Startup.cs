@@ -2,8 +2,6 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
-using System;
-using System.Globalization;
 using BaseAdminProject.Business.Core;
 using BaseAdminProject.Data;
 using BaseAdminProject.Data.Models;
@@ -16,6 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using System.Globalization;
 
 namespace BaseAdminProject
 {
@@ -36,22 +36,15 @@ namespace BaseAdminProject
             services.AddIdentity<BaseAdminUser, IdentityRole>(options =>
                 {
                     // Password settings.
-                    options.Password.RequireDigit = true;
-                    options.Password.RequireLowercase = true;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                     options.Password.RequiredLength = 8;
-
-                    // Lockout settings.
-                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                    options.Lockout.MaxFailedAccessAttempts = 5;
-                    options.Lockout.AllowedForNewUsers = true;
 
                     options.SignIn.RequireConfirmedAccount = true;
                     options.SignIn.RequireConfirmedEmail = true;
 
                     // User settings.
-                    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                    options.User.RequireUniqueEmail = true;
                 })
                 .AddEntityFrameworkStores<BaseAdminDbContext>()
                 .AddDefaultTokenProviders();
@@ -69,14 +62,24 @@ namespace BaseAdminProject
 
             services.AddAntiforgery();
 
-            services.AddTransient<IEmailSender, EmailSender>(i =>
-               new EmailSender(
-                   Configuration["EmailSender:Host"],
-                   Configuration.GetValue<int>("EmailSender:Port"),
-                   Configuration.GetValue<bool>("EmailSender:EnableSSL"),
-                   Configuration["EmailSender:UserName"],
-                   Configuration["EmailSender:Password"],
-                   Configuration["EmailSender:EmailFrom"]));
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "BaseAdmin API",
+                    Version = "v1",
+                    Description = "BaseAdmin Api"
+                });
+            });
+
+            services.AddTransient<IEmailSender, EmailSender>(i => new EmailSender(
+                  Configuration["EmailSender:Host"],
+                  Configuration.GetValue<int>("EmailSender:Port"),
+                  Configuration.GetValue<bool>("EmailSender:EnableSSL"),
+                  Configuration["EmailSender:UserName"],
+                  Configuration["EmailSender:Password"],
+                  Configuration["EmailSender:EmailFrom"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,10 +98,11 @@ namespace BaseAdminProject
                 app.UseHsts();
             }
 
-            CultureInfo[] supportedCultures = new[]
+            CultureInfo[] supportedCultures =
             {
                 new CultureInfo("pt-BR")
             };
+
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture("pt-BR"),
@@ -119,11 +123,18 @@ namespace BaseAdminProject
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BaseAdminApi V1");
+            });
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
 

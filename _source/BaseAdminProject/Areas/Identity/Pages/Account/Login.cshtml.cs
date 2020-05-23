@@ -47,13 +47,15 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
+            [Display(Name = "Senha")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Lembrar-me?")]
             public bool RememberMe { get; set; }
         }
 
@@ -80,9 +82,7 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -99,14 +99,14 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account
                     _logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
-                }
+
+                ModelState.AddModelError(
+                    string.Empty,
+                    result.IsNotAllowed ? "Você precisa confirmar seu email para obter acesso ao sistema." : "Tentativa de login inválida.");
+
+                return Page();
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
     }

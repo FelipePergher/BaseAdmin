@@ -1,0 +1,38 @@
+﻿@import "~bootstrap/scss/_variables";
+
+.invalid-feedback {
+    display: block;
+}
+
+.eye-password {
+    cursor: pointer;
+}
+
+[data-notify="container"] {
+    width: 450px !important;
+    text-align: center;
+}
+
+.form-group-invalid {
+    .input-group-text {
+        border-color: $danger
+    }
+}
+
+.form-group-valid {
+    .input-group-text {
+        border-color: $success
+    }
+}
+
+.validation-summary-errors {
+    font-size: 80%;
+    color: $danger;
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+        padding: 15px;
+        background-color: rgba($danger, 0.1);
+    }
+}

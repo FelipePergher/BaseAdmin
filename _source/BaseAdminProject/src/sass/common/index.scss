@@ -4,16 +4,4 @@
 @import "~@fortawesome/fontawesome-free/scss/solid";
 
 @import "./full-importation";
-
-.invalid-feedback{
-    display: block;
-}
-
-.eye-password {
-    cursor: pointer;
-}
-
-[data-notify="container"] {
-    width: 450px !important;
-    text-align: center;
-}
+@import "./forms";

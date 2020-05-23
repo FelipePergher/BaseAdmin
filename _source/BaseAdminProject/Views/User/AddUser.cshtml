@@ -1,5 +1,15 @@
-﻿@{
+﻿@model BaseAdminProject.Models.FormModels.AddUserFormModel
+@{
     ViewData["Title"] = "Adicionar Usuário";
+}
+
+@section Styles {
+    <environment names="Development">
+        <link href="~/dist/css/add-user.bundle.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/dist/css/add-user.bundle.css" asp-append-version="true" rel="stylesheet" />
+    </environment>
 }
 
 <div class="header bg-primary pb-6">
@@ -27,64 +37,125 @@
 
 <div class="container-fluid mt--6">
     <div class="row justify-content-center">
-        <div class="col-lg-6">
+        <div class="col-lg-5 col-md-7">
             <div class="card-wrapper">
-                <!-- Input groups -->
+
                 <div class="card">
-                    <!-- Card header -->
+
                     <div class="card-header">
                         <h3 class="mb-0">@ViewData["Title"]</h3>
                     </div>
-                    <!-- Card body -->
+
                     <div class="card-body">
-                        <form>
-                            <!-- Input groups with icon -->
+                        <form id="addUserForm" asp-controller="User" asp-action="AddUser" method="post">
+                            <div asp-validation-summary="All"></div>
+
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <label class="form-control-label" asp-for="UserName"></label>
                                         <div class="input-group input-group-merge">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-user"></i>
+                                                </span>
                                             </div>
-                                            <input class="form-control" placeholder="Your name" type="text">
+
+                                            <input asp-for="UserName" class="form-control">
                                         </div>
+                                        <span asp-validation-for="UserName" class="invalid-feedback"></span>
                                     </div>
-                                </div>
-                                <div class="col-12">
+
                                     <div class="form-group">
+                                        <label class="form-control-label" asp-for="Email"></label>
                                         <div class="input-group input-group-merge">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-envelope"></i>
+                                                </span>
                                             </div>
-                                            <input class="form-control" placeholder="Email address" type="email">
+
+                                            <input asp-for="Email" class="form-control">
                                         </div>
+                                        <span asp-validation-for="Email" class="invalid-feedback"></span>
                                     </div>
-                                </div>
-                                <div class="col-12">
+
                                     <div class="form-group">
-                                        <div class="input-group input-group-merge">
-                                            <input class="form-control" placeholder="Password" type="password" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACIUlEQVQ4EX2TOYhTURSG87IMihDsjGghBhFBmHFDHLWwSqcikk4RRKJgk0KL7C8bMpWpZtIqNkEUl1ZCgs0wOo0SxiLMDApWlgOPrH7/5b2QkYwX7jvn/uc//zl3edZ4PPbNGvF4fC4ajR5VrNvt/mo0Gr1ZPOtfgWw2e9Lv9+chX7cs64CS4Oxg3o9GI7tUKv0Q5o1dAiTfCgQCLwnOkfQOu+oSLyJ2A783HA7vIPLGxX0TgVwud4HKn0nc7Pf7N6vV6oZHkkX8FPG3uMfgXC0Wi2vCg/poUKGGcagQI3k7k8mcp5slcGswGDwpl8tfwGJg3xB6Dvey8vz6oH4C3iXcFYjbwiDeo1KafafkC3NjK7iL5ESFGQEUF7Sg+ifZdDp9GnMF/KGmfBdT2HCwZ7TwtrBPC7rQaav6Iv48rqZwg+F+p8hOMBj0IbxfMdMBrW5pAVGV/ztINByENkU0t5BIJEKRSOQ3Aj+Z57iFs1R5NK3EQS6HQqF1zmQdzpFWq3W42WwOTAf1er1PF2USFlC+qxMvFAr3HcexWX+QX6lUvsKpkTyPSEXJkw6MQ4S38Ljdbi8rmM/nY+CvgNcQqdH6U/xrYK9t244jZv6ByUOSiDdIfgBZ12U6dHEHu9TpdIr8F0OP692CtzaW/a6y3y0Wx5kbFHvGuXzkgf0xhKnPzA4UTyaTB8Ph8AvcHi3fnsrZ7Wore02YViqVOrRXXPhfqP8j6MYlawoAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="fas fa-eye"></i></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
+                                        <label class="form-control-label" asp-for="PhoneNumber"></label>
                                         <div class="input-group input-group-merge">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-phone"></i>
+                                                </span>
                                             </div>
-                                            <input class="form-control" placeholder="Phone number" type="text">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+
+                                            <input asp-for="PhoneNumber" class="form-control">
+                                        </div>
+                                        <span asp-validation-for="PhoneNumber" class="invalid-feedback"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="Role" class="form-control-label"></label>
+
+                                        <div class="input-group input-group-merge">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-user-tag"></i>
+                                                </span>
+                                            </div>
+
+                                            <select asp-for="Role" asp-items="Model.ApplicationRoles" class="form-control">
+                                                <option value="" selected disabled hidden="">Selecione uma opção</option>
+                                            </select>
+                                        </div>
+                                        <span asp-validation-for="Role" class="invalid-feedback"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-control-label" asp-for="Password"></label>
+                                        <div class="input-group input-group-merge">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-lock"></i>
+                                                </span>
+                                            </div>
+
+                                            <input asp-for="Password" class="form-control">
+
+                                            <div class="input-group-append eye-password eyePassword">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-eye-slash"></i>
+                                                </span>
                                             </div>
                                         </div>
+                                        <span asp-validation-for="Password" class="invalid-feedback"></span>
                                     </div>
-                                </div>
-                                <div class="col-12 text-right">
-                                    <button class="btn  btn-primary">Salvar</button>
+
+                                    <div class="form-group">
+                                        <label class="form-control-label" asp-for="ConfirmPassword"></label>
+                                        <div class="input-group input-group-merge">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-lock"></i>
+                                                </span>
+                                            </div>
+
+                                            <input asp-for="ConfirmPassword" class="form-control">
+
+                                            <div class="input-group-append eye-password eyePassword">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-eye-slash"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <span asp-validation-for="ConfirmPassword" class="invalid-feedback"></span>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary float-right">
+                                        Salvar
+                                        <span class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        <span class="sr-only">Carregando...</span>
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -92,7 +163,14 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
+@section Scripts {
+    <environment names="Development">
+        <script src="~/dist/js/add-user.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/dist/js/add-user.bundle.js" asp-append-version="true"></script>
+    </environment>
+}

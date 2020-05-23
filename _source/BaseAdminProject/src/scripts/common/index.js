@@ -1,5 +1,5 @@
 ﻿"use strict";
-import './scss';
+import "./scss";
 import "bootstrap";
 import "./argon-template";
 
@@ -29,15 +29,15 @@ export default (function () {
 
     global.select2Language = {
         errorLoading: function () {
-            return 'Os resultados não puderam ser carregados.';
+            return "Os resultados não puderam ser carregados.";
         },
         inputTooLong: function (args) {
             var overChars = args.input.length - args.maximum;
 
-            var message = 'Apague ' + overChars + ' caracter';
+            var message = "Apague " + overChars + " caracter";
 
             if (overChars != 1) {
-                message += 'es';
+                message += "es";
             }
 
             return message;
@@ -45,52 +45,52 @@ export default (function () {
         inputTooShort: function (args) {
             var remainingChars = args.minimum - args.input.length;
 
-            var message = 'Digite ' + remainingChars + ' ou mais caracteres';
+            var message = "Digite " + remainingChars + " ou mais caracteres";
 
             return message;
         },
         loadingMore: function () {
-            return 'Carregando mais resultados…';
+            return "Carregando mais resultados…";
         },
         maximumSelected: function (args) {
-            var message = 'Você só pode selecionar ' + args.maximum + ' ite';
+            var message = "Você só pode selecionar " + args.maximum + " ite";
 
             if (args.maximum == 1) {
-                message += 'm';
+                message += "m";
             } else {
-                message += 'ns';
+                message += "ns";
             }
 
             return message;
         },
         noResults: function () {
-            return 'Nenhum resultado encontrado';
+            return "Nenhum resultado encontrado";
         },
         searching: function () {
-            return 'Buscando…';
+            return "Buscando…";
         },
         removeAllItems: function () {
-            return 'Remover todos os itens';
+            return "Remover todos os itens";
         }
     };
 
     global.setupValidator = function (validator) {
         validator.setDefaults({
             highlight: function highlight(element) {
-                if ($(element).prop('type') !== 'checkbox') {
-                    $(element).addClass('is-invalid').removeClass('is-valid');
+                if ($(element).prop("type") !== "checkbox") {
+                    $(element).addClass("is-invalid").removeClass("is-valid").closest(".form-group").addClass("form-group-invalid").removeClass("form-group-valid");
                 }
             },
             // eslint-disable-next-line object-shorthand
             unhighlight: function unhighlight(element) {
-                if ($(element).prop('type') !== 'checkbox') {
-                    $(element).addClass('is-valid').removeClass('is-invalid');
+                if ($(element).prop("type") !== "checkbox") {
+                    $(element).addClass("is-valid").removeClass("is-invalid").closest(".form-group").addClass("form-group-valid").removeClass("form-group-invalid");
                 }
             },
-            errorElement: 'span',
+            errorElement: "span",
             errorPlacement: function errorPlacement(error, element) {
-                error.addClass('invalid-feedback');
-                element.prop('type') === 'checkbox' ? error.insertAfter(element.parent('label')) : error.insertAfter(element);
+                error.addClass("invalid-feedback");
+                element.prop("type") === "checkbox" ? error.insertAfter(element.parent("label")) : error.insertAfter(element);
             }
         });
     };
@@ -110,22 +110,22 @@ export default (function () {
     };
 
     global.masks = {
-        Cpf: '000.000.000-00',
-        Price: '000.000.000.000.000,00',
-        date: '99/99/9999'
+        Cpf: "000.000.000-00",
+        Price: "000.000.000.000.000,00",
+        date: "99/99/9999"
     };
 
     global.setupPhoneMaskOnField = function (selector) {
         var inputElement = $(selector);
 
         setCorrectPhoneMask(inputElement);
-        inputElement.on('input, keyup', function () {
+        inputElement.on("input, keyup", function () {
             setCorrectPhoneMask(inputElement);
         });
     }
 
     global.SPMaskBehavior = function (val) {
-        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+        return val.replace(/\D/g, "").length === 11 ? "(00) 00000-0000" : "(00) 0000-00009";
     };
 
     global.spOptions = {
