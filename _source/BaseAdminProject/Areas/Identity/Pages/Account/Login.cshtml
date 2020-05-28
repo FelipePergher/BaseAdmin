@@ -21,8 +21,8 @@
         <div class="container">
             <div class="header-body text-center mb-7">
                 <div class="row justify-content-center">
-                    <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-                        <h1 class="text-white">Bem vindo ao Base Admin Project!</h1>
+                    <div class="col-lg-5 col-md-7">
+                        <h1 class="text-white">@ViewData["title"]</h1>
                     </div>
                 </div>
             </div>
@@ -40,14 +40,13 @@
             <div class="col-lg-5 col-md-7">
                 <div class="card bg-secondary border-0 mb-0">
                     <div class="card-body px-lg-5 py-lg-5">
-                        <div class="text-center text-muted mb-4">
-                            <small>@ViewData["title"]</small>
-                        </div>
+                        <partial name="_StatusMessage" />
+
                         <form id="loginForm" method="post" novalidate>
-                            <div asp-validation-summary="All"></div>
+                            <div asp-validation-summary="ModelOnly"></div>
 
                             <div class="form-group mb-3">
-                                <label asp-for="Input.Email" class="form-control-label"></label>
+                                <label asp-for="Input.EmailUsuario" class="form-control-label"></label>
                                 <div class="input-group input-group-merge">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -55,10 +54,10 @@
                                         </span>
                                     </div>
 
-                                    <input asp-for="Input.Email" type="email" class="form-control" placeholder="Email">
+                                    <input asp-for="Input.EmailUsuario" class="form-control" placeholder="Email">
                                 </div>
 
-                                <span asp-validation-for="Input.Email" class="invalid-feedback"></span>
+                                <span asp-validation-for="Input.EmailUsuario" class="invalid-feedback"></span>
                             </div>
 
                             <div class="form-group mb-3">
@@ -88,13 +87,11 @@
                                 <label asp-for="Input.RememberMe" class="custom-control-label"></label>
                             </div>
 
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4">
-                                    Entrar
-                                    <span class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    <span class="sr-only">Carregando...</span>
-                                </button>
-                            </div>
+                            <button type="submit" class="btn btn-primary my-4 float-right">
+                                Entrar
+                                <span class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="sr-only">Carregando...</span>
+                            </button>
                         </form>
                     </div>
                 </div>

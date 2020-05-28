@@ -48,7 +48,7 @@
 
                     <div class="card-body">
                         <form id="addUserForm" asp-controller="User" asp-action="AddUser" method="post">
-                            <div asp-validation-summary="All"></div>
+                            <div asp-validation-summary="ModelOnly"></div>
 
                             <div class="row">
                                 <div class="col-12">
@@ -61,7 +61,7 @@
                                                 </span>
                                             </div>
 
-                                            <input asp-for="UserName" class="form-control">
+                                            <input asp-for="UserName" class="form-control" placeholder="joãosilva">
                                         </div>
                                         <span asp-validation-for="UserName" class="invalid-feedback"></span>
                                     </div>
@@ -75,7 +75,7 @@
                                                 </span>
                                             </div>
 
-                                            <input asp-for="Email" class="form-control">
+                                            <input asp-for="Email" class="form-control" placeholder="nome@@exemplo.com">
                                         </div>
                                         <span asp-validation-for="Email" class="invalid-feedback"></span>
                                     </div>
@@ -89,7 +89,7 @@
                                                 </span>
                                             </div>
 
-                                            <input asp-for="PhoneNumber" class="form-control">
+                                            <input asp-for="PhoneNumber" class="form-control" placeholder="(49) 9 9999-9999">
                                         </div>
                                         <span asp-validation-for="PhoneNumber" class="invalid-feedback"></span>
                                     </div>
@@ -120,7 +120,7 @@
                                                 </span>
                                             </div>
 
-                                            <input asp-for="Password" class="form-control">
+                                            <input asp-for="Password" class="form-control" placeholder="********">
 
                                             <div class="input-group-append eye-password eyePassword">
                                                 <span class="input-group-text">
@@ -140,7 +140,7 @@
                                                 </span>
                                             </div>
 
-                                            <input asp-for="ConfirmPassword" class="form-control">
+                                            <input asp-for="ConfirmPassword" class="form-control" placeholder="********">
 
                                             <div class="input-group-append eye-password eyePassword">
                                                 <span class="input-group-text">

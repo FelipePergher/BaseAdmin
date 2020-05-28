@@ -2,6 +2,7 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
+using BaseAdminProject.Business.Core;
 using BaseAdminProject.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -23,26 +24,27 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account
             _userManager = userManager;
         }
 
-        [TempData]
-        public string StatusMessage { get; set; }
-
         public async Task<IActionResult> OnGetAsync(string userId, string code)
         {
-            if (userId == null || code == null)
+            if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(code))
             {
-                return RedirectToPage("/Index");
+                BaseAdminUser user = await _userManager.FindByIdAsync(userId);
+                if (user != null)
+                {
+                    code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+                    IdentityResult result = await _userManager.ConfirmEmailAsync(user, code);
+
+                    TempData[Globals.StatusMessageKey] = result.Succeeded ? "Obrigado por confirmar seu email." : "Erro ao confirmar seu email.";
+                    TempData[Globals.StatusMessageTypeKey] = result.Succeeded ? Globals.StatusMessageTypeSuccess : Globals.StatusMessageTypeDanger;
+
+                    return RedirectToPage("./Login");
+                }
             }
 
-            BaseAdminUser user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
-                return NotFound($"Unable to load user with ID '{userId}'.");
-            }
+            TempData[Globals.StatusMessageKey] = "Erro ao confirmar seu email.";
+            TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeDanger;
 
-            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-            IdentityResult result = await _userManager.ConfirmEmailAsync(user, code);
-            StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
-            return Page();
+            return RedirectToPage("./Login");
         }
     }
 }

@@ -77,7 +77,7 @@ namespace BaseAdminProject.Controllers
                     await _emailSender.SendEmailAsync(user.Email, "Confirme seu email", $"Por favor confirme sua conta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
 
                     TempData[Globals.StatusMessageKey] = "Usuário adicionado com sucesso!";
-                    TempData[Globals.StatusMessageTypeKey] = "success";
+                    TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
                     return RedirectToAction(nameof(Index));
                 }
 

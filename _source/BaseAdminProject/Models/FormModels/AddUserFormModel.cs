@@ -15,12 +15,13 @@ namespace BaseAdminProject.Models.FormModels
     {
         [Display(Name = "Nome de usuário")]
         [Required(ErrorMessage = Globals.RequiredMessage)]
+        [RegularExpression(@"^[a-zA-Z0-9][.a-zA-Z0-9]{3,18}[a-zA-Z0-9]$", ErrorMessage = "O nome de usuário só pode conter letras e números e deve conter entre 5 e 18 caracteres.")]
         [Remote("IsUsedUsername", "UserApi", ErrorMessage = "Nome de usuário já utilizado!")]
         public string UserName { get; set; }
 
         [Display(Name = "Email")]
         [Required(ErrorMessage = Globals.RequiredMessage)]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = Globals.EmailRequiredMessage)]
         [DataType(DataType.EmailAddress)]
         [Remote("IsUsedEmail", "UserApi", ErrorMessage = "Email já utilizado!")]
         public string Email { get; set; }
@@ -48,7 +49,7 @@ namespace BaseAdminProject.Models.FormModels
 
         [Display(Name = "Confirmação de senha")]
         [Required(ErrorMessage = Globals.RequiredMessage)]
-        [Compare(nameof(Password))]
+        [Compare(nameof(Password), ErrorMessage = "As senhas não conferem.")]
         [PasswordPropertyText]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }

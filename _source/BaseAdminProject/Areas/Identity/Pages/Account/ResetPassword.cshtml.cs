@@ -2,12 +2,14 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
+using BaseAdminProject.Business.Core;
 using BaseAdminProject.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,20 +31,27 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Display(Name = "Email")]
+            [Required(ErrorMessage = Globals.RequiredMessage)]
+            [EmailAddress(ErrorMessage = Globals.EmailRequiredMessage)]
+            [DataType(DataType.EmailAddress)]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Display(Name = "Senha")]
+            [Required(ErrorMessage = Globals.RequiredMessage)]
+            [PasswordPropertyText]
             [DataType(DataType.Password)]
+            [RegularExpression(@"^(?=.*[a-z])(?=.*\d).{8,}$", ErrorMessage = "A senha deve conter letras, números e minimo de 8 caracteres")]
             public string Password { get; set; }
 
+            [Display(Name = "Confirmação de senha")]
+            [Required(ErrorMessage = Globals.RequiredMessage)]
+            [Compare(nameof(Password), ErrorMessage = "As senhas não conferem.")]
+            [PasswordPropertyText]
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
+            [HiddenInput]
             public string Code { get; set; }
         }
 
@@ -50,16 +59,14 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account
         {
             if (code == null)
             {
-                return BadRequest("A code must be supplied for password reset.");
+                return NotFound();
             }
-            else
+
+            Input = new InputModel
             {
-                Input = new InputModel
-                {
-                    Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
-                };
-                return Page();
-            }
+                Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
+            };
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -72,14 +79,19 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account
             BaseAdminUser user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                // Don't reveal that the user does not exist
-                return RedirectToPage("./ResetPasswordConfirmation");
+                TempData[Globals.StatusMessageKey] = "Sua senha foi redefinida.";
+                TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
+
+                return RedirectToPage("./Login");
             }
 
             IdentityResult result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
             if (result.Succeeded)
             {
-                return RedirectToPage("./ResetPasswordConfirmation");
+                TempData[Globals.StatusMessageKey] = "Sua senha foi redefinida.";
+                TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
+
+                return RedirectToPage("./Login");
             }
 
             foreach (IdentityError error in result.Errors)

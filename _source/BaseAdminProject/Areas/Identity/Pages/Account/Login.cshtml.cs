@@ -2,6 +2,7 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
+using BaseAdminProject.Business.Core;
 using BaseAdminProject.Data.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -45,12 +46,11 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
+            [Required(ErrorMessage = Globals.RequiredMessage)]
+            [Display(Name = "Email/Usuário")]
+            public string EmailUsuario { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = Globals.RequiredMessage)]
             [Display(Name = "Senha")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
@@ -82,7 +82,17 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                Microsoft.AspNetCore.Identity.SignInResult result;
+                var user = await _userManager.FindByEmailAsync(Input.EmailUsuario);
+                if (user != null)
+                {
+                    result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, true);
+                }
+                else
+                {
+                    result = await _signInManager.PasswordSignInAsync(Input.EmailUsuario, Input.Password, Input.RememberMe, true);
+                }
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
