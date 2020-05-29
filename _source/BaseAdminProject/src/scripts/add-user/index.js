@@ -1,10 +1,11 @@
 ﻿"use strict";
 import "jquery-validation";
 import "jquery-validation-unobtrusive";
+import { SetupValidator, EyePassword } from '../common/common';
 
 export default (function () {
 
-    global.setupValidator($.validator);
+    SetupValidator($.validator);
 
     $(function () {
         initPage();
@@ -15,7 +16,7 @@ export default (function () {
     }
 
     function initLoginForm() {
-        global.eyePassword();
+        EyePassword();
 
         $("#addUserForm").submit(function (e) {
             let form = $(this);

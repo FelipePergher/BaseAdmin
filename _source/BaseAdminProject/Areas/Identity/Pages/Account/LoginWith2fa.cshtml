@@ -13,13 +13,13 @@
             <input asp-for="RememberMe" type="hidden" />
             <div asp-validation-summary="ModelOnly" class="invalid-feedback"></div>
             <div class="form-group">
-                <label asp-for="Input.TwoFactorCode"></label>
+                <label asp-for="Input.TwoFactorCode" class="form-control-label"></label>
                 <input asp-for="Input.TwoFactorCode" class="form-control" autocomplete="off" />
                 <span asp-validation-for="Input.TwoFactorCode" class="invalid-feedback"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">
-                    <label asp-for="Input.RememberMachine">
+                    <label asp-for="Input.RememberMachine" class="form-control-label">
                         <input asp-for="Input.RememberMachine" />
                         @Html.DisplayNameFor(m => m.Input.RememberMachine)
                     </label>

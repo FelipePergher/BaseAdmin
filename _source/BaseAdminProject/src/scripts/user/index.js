@@ -4,6 +4,7 @@ import "jquery-validation-unobtrusive";
 import "datatables.net";
 import "datatables.net-bs4";
 import 'bootstrap4-notify';
+import { DatatablesLanguage } from '../common/common';
 
 export default (function () {
 
@@ -15,7 +16,7 @@ export default (function () {
         $("#userDataTable").on("init.dt", function () {
             $("div.dataTables_length select").removeClass("custom-select custom-select-sm");
         }).DataTable({
-            language: global.datatablesLanguage,
+            language: DatatablesLanguage(),
             ajax: {
                 url: "/api/user/getAll",
                 type: "GET",
@@ -29,7 +30,6 @@ export default (function () {
                             align: "center"
                         },
                     });
-
                 }
             },
             columns: [

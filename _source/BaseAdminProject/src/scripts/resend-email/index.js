@@ -1,10 +1,11 @@
 ﻿"use strict";
 import "jquery-validation";
 import "jquery-validation-unobtrusive";
+import { SetupValidator } from '../common/common';
 
 export default (function () {
 
-    global.setupValidator($.validator);
+    SetupValidator($.validator);
 
     $(function () {
         initPage();

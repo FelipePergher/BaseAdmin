@@ -16,5 +16,11 @@ namespace BaseAdminProject.Business.Core
         // Error Messages Type
         public const string StatusMessageTypeSuccess = "success";
         public const string StatusMessageTypeDanger = "danger";
+
+        // Masks
+        public const string MaskCpf = "000.000.000-00";
+        public const string MaskPrice = "000.000.000.000.000,00";
+        public const string MaskDate = "99/99/9999";
+        public const string MaskPhone = "(00) 0 0000-0000";
     }
 }

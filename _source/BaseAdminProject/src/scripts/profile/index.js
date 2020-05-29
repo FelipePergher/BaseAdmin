@@ -1,7 +1,8 @@
 ﻿"use strict";
 import "jquery-validation";
 import "jquery-validation-unobtrusive";
-import { SetupValidator, EyePassword } from '../common/common';
+import "jquery-mask-plugin";
+import { SetupValidator } from '../common/common';
 
 export default (function () {
 
@@ -12,13 +13,11 @@ export default (function () {
     });
 
     function initPage() {
-        initChangePasswordForm();
+        initProfileForm();
     }
 
-    function initChangePasswordForm() {
-        EyePassword();
-
-        $("#changePasswordForm").submit(function (e) {
+    function initProfileForm() {
+        $("#profileForm").submit(function (e) {
             let form = $(this);
             if (form.valid()) {
                 let submitButton = $(this).find("button[type='submit']");
@@ -29,4 +28,3 @@ export default (function () {
     }
 
 }());
-
