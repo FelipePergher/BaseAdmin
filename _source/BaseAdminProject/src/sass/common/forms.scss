@@ -36,3 +36,11 @@
         background-color: rgba($danger, 0.1);
     }
 }
+
+.input-group {
+    &--disabled {
+        span {
+            background-color: #e9ecef;
+        }
+    }
+}

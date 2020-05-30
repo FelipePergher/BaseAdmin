@@ -48,6 +48,7 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account
                 {
                     string code = await _userManager.GeneratePasswordResetTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
                     string callbackUrl = Url.Page(
                         "/Account/ResetPassword",
                         pageHandler: null,

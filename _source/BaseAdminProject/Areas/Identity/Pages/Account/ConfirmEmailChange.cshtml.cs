@@ -2,6 +2,7 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
+using BaseAdminProject.Business.Core;
 using BaseAdminProject.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -25,9 +26,6 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account
             _signInManager = signInManager;
         }
 
-        [TempData]
-        public string StatusMessage { get; set; }
-
         public async Task<IActionResult> OnGetAsync(string userId, string email, string code)
         {
             if (userId == null || email == null || code == null)
@@ -38,28 +36,23 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account
             BaseAdminUser user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{userId}'.");
+                return NotFound();
             }
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             IdentityResult result = await _userManager.ChangeEmailAsync(user, email, code);
             if (!result.Succeeded)
             {
-                StatusMessage = "Error changing email.";
-                return Page();
-            }
-
-            // In our UI email and user name are one and the same, so when we update the email
-            // we need to update the user name.
-            IdentityResult setUserNameResult = await _userManager.SetUserNameAsync(user, email);
-            if (!setUserNameResult.Succeeded)
-            {
-                StatusMessage = "Error changing user name.";
+                TempData[Globals.StatusMessageKey] = "Erro ao trocar o email.";
+                TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeDanger;
                 return Page();
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Thank you for confirming your email change.";
+
+            TempData[Globals.StatusMessageKey] = "Obrigado por confirmar sua troca de email.";
+            TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
+
             return Page();
         }
     }

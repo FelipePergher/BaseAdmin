@@ -15,6 +15,7 @@ namespace BaseAdminProject.Business.Core
 
         // Error Messages Type
         public const string StatusMessageTypeSuccess = "success";
+        public const string StatusMessageTypeInfo = "info";
         public const string StatusMessageTypeDanger = "danger";
 
         // Masks

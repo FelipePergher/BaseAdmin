@@ -2,7 +2,7 @@
 import "jquery-validation";
 import "jquery-validation-unobtrusive";
 import "jquery-mask-plugin";
-import { SetupValidator, EyePassword } from '../common/common';
+import { SetupValidator } from '../common/common';
 
 export default (function () {
 
@@ -13,19 +13,19 @@ export default (function () {
     });
 
     function initPage() {
-        initLoginForm();
+        initEmailForm();
     }
 
-    function initLoginForm() {
-        EyePassword();
-
-        $("#addUserForm").submit(function (e) {
+    function initEmailForm() {
+        $("#emailForm").submit(function (e) {
             let form = $(this);
             if (form.valid()) {
                 let submitButton = $(this).find("button[type='submit']");
+                let submitButtonClicked = $(this).find("button[type='submit']:focus");
                 $(submitButton).prop("disabled", "disabled").addClass("disabled");
-                $(submitButton).children("span").removeClass("d-none");
+                $(submitButtonClicked).children("span").removeClass("d-none");
             }
         });
     }
+
 }());

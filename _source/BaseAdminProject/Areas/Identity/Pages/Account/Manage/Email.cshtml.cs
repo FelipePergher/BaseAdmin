@@ -2,6 +2,7 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
+using BaseAdminProject.Business.Core;
 using BaseAdminProject.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace BaseAdminProject.Areas.Identity.Pages.Account.Manage
 {
-    public partial class EmailModel : PageModel
+    public class EmailModel : PageModel
     {
         private readonly UserManager<BaseAdminUser> _userManager;
         private readonly SignInManager<BaseAdminUser> _signInManager;
@@ -37,17 +38,14 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account.Manage
 
         public bool IsEmailConfirmed { get; set; }
 
-        [TempData]
-        public string StatusMessage { get; set; }
-
         [BindProperty]
         public InputModel Input { get; set; }
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "New email")]
+            [Required(ErrorMessage = Globals.RequiredMessage)]
+            [EmailAddress(ErrorMessage = Globals.EmailRequiredMessage)]
+            [Display(Name = "Novo email")]
             public string NewEmail { get; set; }
         }
 
@@ -69,7 +67,7 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account.Manage
             BaseAdminUser user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound();
             }
 
             await LoadAsync(user);
@@ -81,7 +79,7 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account.Manage
             BaseAdminUser user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound();
             }
 
             if (!ModelState.IsValid)
@@ -95,21 +93,27 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account.Manage
             {
                 string userId = await _userManager.GetUserIdAsync(user);
                 string code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
                 string callbackUrl = Url.Page(
                     "/Account/ConfirmEmailChange",
                     pageHandler: null,
-                    values: new {userId, email = Input.NewEmail, code },
+                    values: new { userId, email = Input.NewEmail, code },
                     protocol: Request.Scheme);
+
                 await _emailSender.SendEmailAsync(
                     Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Confirme seu email",
+                    $"Por favor confirme sua conta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
 
-                StatusMessage = "Confirmation link to change email sent. Please check your email.";
+                TempData[Globals.StatusMessageKey] = "Link de confirmação de troca de email enviado. Por favor verifique seu email.";
+                TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
+
                 return RedirectToPage();
             }
 
-            StatusMessage = "Your email is unchanged.";
+            TempData[Globals.StatusMessageKey] = "Seu email não foi alterado.";
+            TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeInfo;
             return RedirectToPage();
         }
 
@@ -118,7 +122,7 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account.Manage
             BaseAdminUser user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound();
             }
 
             if (!ModelState.IsValid)
@@ -136,12 +140,15 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account.Manage
                 pageHandler: null,
                 values: new { area = "Identity", userId, code },
                 protocol: Request.Scheme);
+
             await _emailSender.SendEmailAsync(
                 email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                "Confirme seu email",
+                $"Por favor confirme sua conta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            TempData[Globals.StatusMessageKey] = "Email de verificação enviado. Por favor confira seu email.";
+            TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
+
             return RedirectToPage();
         }
     }

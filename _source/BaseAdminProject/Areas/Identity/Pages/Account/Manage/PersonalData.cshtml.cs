@@ -2,37 +2,16 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
-using BaseAdminProject.Data.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace BaseAdminProject.Areas.Identity.Pages.Account.Manage
 {
     public class PersonalDataModel : PageModel
     {
-        private readonly UserManager<BaseAdminUser> _userManager;
-        private readonly ILogger<PersonalDataModel> _logger;
-
-        public PersonalDataModel(
-            UserManager<BaseAdminUser> userManager,
-            ILogger<PersonalDataModel> logger)
+        public IActionResult OnGet()
         {
-            _userManager = userManager;
-            _logger = logger;
-        }
-
-        public async Task<IActionResult> OnGet()
-        {
-            BaseAdminUser user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            return Page();
+            return RedirectToPage("./Index");
         }
     }
 }

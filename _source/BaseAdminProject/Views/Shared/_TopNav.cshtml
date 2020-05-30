@@ -2,7 +2,7 @@
 <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-           
+
             <!-- Navbar links -->
             <ul class="navbar-nav align-items-center  ml-md-auto ">
                 <li class="nav-item d-xl-none">
@@ -16,7 +16,7 @@
                         </div>
                     </div>
                 </li>
-               
+
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
@@ -140,6 +140,7 @@
                         </a>
                     </div>
                 </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
@@ -187,6 +188,7 @@
                     </div>
                 </li>
             </ul>
+
             <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
                 <li class="nav-item dropdown">
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -209,26 +211,31 @@
                             <span>Meu Perfil</span>
                         </a>
 
+                        <a asp-area="Identity" asp-page="/Account/Manage/Email" class="dropdown-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email</span>
+                        </a>
+
                         <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="dropdown-item">
                             <i class="fas fa-lock"></i>
                             <span>Trocar Senha</span>
                         </a>
                         @*<a href="#!" class="dropdown-item">
-            <i class="fas fa-user"></i>
-            <span>Activity</span>
-        </a>
-        <a href="#!" class="dropdown-item">
-            <i class="fas fa-user"></i>
-            <span>Support</span>
-        </a>*@
+                                <i class="fas fa-user"></i>
+                                <span>Activity</span>
+                            </a>
+                            <a href="#!" class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                <span>Support</span>
+                            </a>*@
                         <div class="dropdown-divider"></div>
                         <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" class="dropdown-item">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Logout</span>
 
                             @*<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>*@
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                </form>*@
                         </a>
                     </div>
                 </li>
