@@ -26,21 +26,34 @@
     <div class="card-body">
         <partial name="_StatusMessage" />
 
-        <form id="profileForm" method="post">
+        <form id="usernameForm" method="post" asp-page-handler="ChangeUsername">
             <div asp-validation-summary="ModelOnly"></div>
 
             <div class="form-group">
-                <label asp-for="Username" class="form-control-label"></label>
-                <div class="input-group input-group-merge input-group--disabled">
+                <label asp-for="Input.UserName" class="form-control-label"></label>
+                <div class="input-group input-group-merge">
                     <div class="input-group-prepend">
                         <span class="input-group-text">
                             <i class="fas fa-user"></i>
                         </span>
                     </div>
 
-                    <input asp-for="Username" class="form-control" disabled>
+                    <input asp-for="Input.UserName" class="form-control">
+
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary float-right">
+                            Salvar
+                            <span class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="sr-only">Carregando...</span>
+                        </button>
+                    </div>
                 </div>
+                <span asp-validation-for="Input.UserName" class="invalid-feedback"></span>
             </div>
+        </form>
+
+        <form id="phoneForm" method="post" asp-page-handler="ChangePhone">
+            <div asp-validation-summary="ModelOnly"></div>
 
             <div class="form-group">
                 <label asp-for="Input.PhoneNumber" class="form-control-label"></label>
@@ -52,15 +65,17 @@
                     </div>
 
                     <input asp-for="Input.PhoneNumber" class="form-control" data-mask="@Globals.MaskPhone" />
+
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary float-right">
+                            Salvar
+                            <span class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="sr-only">Carregando...</span>
+                        </button>
+                    </div>
                 </div>
                 <span asp-validation-for="Input.PhoneNumber" class="invalid-feedback"></span>
             </div>
-
-            <button type="submit" class="btn btn-primary float-right">
-                Salvar
-                <span class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                <span class="sr-only">Carregando...</span>
-            </button>
         </form>
     </div>
 </div>

@@ -1,15 +1,16 @@
-﻿@page
-@model ResetPasswordModel
+﻿@model BaseAdminProject.Models.FormModels.LoginFormModel
+
 @{
-    ViewData["Title"] = "Redefinir Senha";
+    ViewData["Title"] = "Entrar";
+    Layout = "_LayoutBase";
 }
 
 @section Styles {
     <environment names="Development">
-        <link href="~/dist/css/reset-password.bundle.css" rel="stylesheet" />
+        <link href="~/dist/css/login.bundle.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
-        <link href="~/dist/css/reset-password.bundle.css" asp-append-version="true" rel="stylesheet" />
+        <link href="~/dist/css/login.bundle.css" asp-append-version="true" rel="stylesheet" />
     </environment>
 }
 
@@ -39,12 +40,13 @@
             <div class="col-lg-5 col-md-7">
                 <div class="card bg-secondary border-0 mb-0">
                     <div class="card-body px-lg-5 py-lg-5">
-                        <form id="resetPasswordForm" method="post">
-                            <div asp-validation-summary="ModelOnly"></div>
-                            <input asp-for="Input.Code" />
+                        <partial name="_StatusMessage" />
 
-                            <div class="form-group">
-                                <label asp-for="Input.Email" class="form-control-label"></label>
+                        <form id="loginForm" method="post" novalidate>
+                            <div asp-validation-summary="ModelOnly"></div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="EmailUsername" class="form-control-label"></label>
                                 <div class="input-group input-group-merge">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -52,13 +54,14 @@
                                         </span>
                                     </div>
 
-                                    <input asp-for="Input.Email" class="form-control" placeholder="Email">
+                                    <input asp-for="EmailUsername" class="form-control" placeholder="Email">
                                 </div>
-                                <span asp-validation-for="Input.Email" class="invalid-feedback"></span>
+
+                                <span asp-validation-for="EmailUsername" class="invalid-feedback"></span>
                             </div>
 
                             <div class="form-group mb-3">
-                                <label asp-for="Input.Password" class="form-control-label"></label>
+                                <label asp-for="Password" class="form-control-label"></label>
 
                                 <div class="input-group input-group-merge">
                                     <div class="input-group-prepend">
@@ -67,7 +70,7 @@
                                         </span>
                                     </div>
 
-                                    <input asp-for="Input.Password" class="form-control" placeholder="Senha">
+                                    <input asp-for="Password" class="form-control" placeholder="*******">
 
                                     <div class="input-group-append eye-password eyePassword">
                                         <span class="input-group-text">
@@ -76,33 +79,16 @@
                                     </div>
                                 </div>
 
-                                <span asp-validation-for="Input.Password" class="invalid-feedback"></span>
+                                <span asp-validation-for="Password" class="invalid-feedback"></span>
                             </div>
 
-                            <div class="form-group mb-3">
-                                <label asp-for="Input.ConfirmPassword" class="form-control-label"></label>
-
-                                <div class="input-group input-group-merge">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-lock"></i>
-                                        </span>
-                                    </div>
-
-                                    <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Senha">
-
-                                    <div class="input-group-append eye-password eyePassword">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-eye-slash"></i>
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <span asp-validation-for="Input.ConfirmPassword" class="invalid-feedback"></span>
+                            <div class="custom-control custom-control-alternative custom-checkbox mb-3">
+                                <input asp-for="RememberMe" class="custom-control-input">
+                                <label asp-for="RememberMe" class="custom-control-label"></label>
                             </div>
 
-                            <button type="submit" class="btn btn-primary float-right">
-                                Enviar
+                            <button type="submit" class="btn btn-primary my-4 float-right">
+                                Entrar
                                 <span class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <span class="sr-only">Carregando...</span>
                             </button>
@@ -111,10 +97,10 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-6">
-                        <a asp-page="./ResendEmailConfirmation" class="text-light"><small>Reenviar email de confirmação</small></a>
+                        <a asp-controller="Account" asp-action="ForgotPassword" class="text-light"><small>Esqueceu a senha?</small></a>
                     </div>
                     <div class="col-6 text-right">
-                        <a asp-page="./Login" class="text-light"><small>Entrar</small></a>
+                        <a asp-controller="Account" asp-action="ResendConfirmEmail" class="text-light"><small>Reenviar email de confirmação</small></a>
                     </div>
                 </div>
             </div>
@@ -124,9 +110,9 @@
 
 @section Scripts {
     <environment names="Development">
-        <script src="~/dist/js/reset-password.bundle.js"></script>
+        <script src="~/dist/js/login.bundle.js"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/dist/js/reset-password.bundle.js" asp-append-version="true"></script>
+        <script src="~/dist/js/login.bundle.js" asp-append-version="true"></script>
     </environment>
 }

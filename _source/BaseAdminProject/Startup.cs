@@ -51,14 +51,13 @@ namespace BaseAdminProject
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/Identity/Account/Login";
-                options.LogoutPath = "/Identity/Account/Logout";
-                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                options.AccessDeniedPath = "/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
 
             services.AddControllersWithViews();
-            services.AddRazorPages();
 
             services.AddAntiforgery();
 
@@ -135,7 +134,6 @@ namespace BaseAdminProject
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
             });
 
             SeedData.ApplyMigrations(app.ApplicationServices);

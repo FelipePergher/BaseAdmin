@@ -25,9 +25,6 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
-        [Display(Name = "Usuário")]
-        public string Username { get; set; }
-
         [BindProperty]
         public InputModel Input { get; set; }
 
@@ -37,6 +34,11 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Número de telefone")]
             [StringLength(16, MinimumLength = 16, ErrorMessage = "Insira um número de telefone válido.")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Usuário")]
+            [Required(ErrorMessage = Globals.RequiredMessage)]
+            [RegularExpression(@"^[a-zA-Z0-9][.a-zA-Z0-9]{3,18}[a-zA-Z0-9]$", ErrorMessage = "O nome de usuário só pode conter letras e números e deve conter entre 5 e 18 caracteres.")]
+            public string UserName { get; set; }
         }
 
         private async Task LoadAsync(BaseAdminUser user)
@@ -44,11 +46,10 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account.Manage
             string userName = await _userManager.GetUserNameAsync(user);
             string phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-            Username = userName;
-
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                UserName = userName
             };
         }
 
@@ -78,6 +79,27 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
+            // Todo make form to save another information of user
+            TempData[Globals.StatusMessageKey] = "Seu perfil foi atualizado!";
+            TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
+
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostChangePhoneAsync()
+        {
+            BaseAdminUser user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                await LoadAsync(user);
+                return Page();
+            }
+
             string phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {
@@ -88,13 +110,55 @@ namespace BaseAdminProject.Areas.Identity.Pages.Account.Manage
                     TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeDanger;
                     return RedirectToPage();
                 }
+
+                await _signInManager.RefreshSignInAsync(user);
+
+                TempData[Globals.StatusMessageKey] = "Seu número de telefone foi atualizado!";
+                TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
+                return RedirectToPage();
             }
 
-            await _signInManager.RefreshSignInAsync(user);
+            TempData[Globals.StatusMessageKey] = "Seu número de telefone não foi alterado.";
+            TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeInfo;
 
-            TempData[Globals.StatusMessageKey] = "Seu perfil foi atualizado!";
-            TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
+            return RedirectToPage();
+        }
 
+        public async Task<IActionResult> OnPostChangeUsernameAsync()
+        {
+            BaseAdminUser user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                await LoadAsync(user);
+                return Page();
+            }
+
+            string userName = await _userManager.GetUserNameAsync(user);
+
+            if (Input.UserName != userName)
+            {
+                IdentityResult setPhoneResult = await _userManager.SetUserNameAsync(user, Input.UserName);
+                if (!setPhoneResult.Succeeded)
+                {
+                    TempData[Globals.StatusMessageKey] = "Alguma coisa deu errado salvando o telefone!";
+                    TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeDanger;
+                    return RedirectToPage();
+                }
+
+                await _signInManager.RefreshSignInAsync(user);
+
+                TempData[Globals.StatusMessageKey] = "Seu usuário foi atualizado!";
+                TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
+                return RedirectToPage();
+            }
+
+            TempData[Globals.StatusMessageKey] = "Seu usuário não foi alterado.";
+            TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeInfo;
             return RedirectToPage();
         }
     }

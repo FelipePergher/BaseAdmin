@@ -17,7 +17,7 @@ export default (function () {
     }
 
     function initProfileForm() {
-        $("#profileForm").submit(function (e) {
+        $("#usernameForm, #phoneForm").submit(function (e) {
             let form = $(this);
             if (form.valid()) {
                 let submitButton = $(this).find("button[type='submit']");
