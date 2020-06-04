@@ -52,15 +52,15 @@ module.exports = merge(common, {
                     {
                         loader: "css-loader",
                         options: {
-                            minimize: true || {/* or CSSNano Options */ },
                             sourceMap: false
-
                         }
                     },
                     {
                         loader: "sass-loader",
                         options: {
-                            includePaths: glob.sync('node_modules').map((d) => path.join(__dirname, d))
+                            sassOptions: {
+                                includePaths: glob.sync('node_modules').map((d) => path.join(__dirname, d))
+                            }
                         }
                     }
                 ]

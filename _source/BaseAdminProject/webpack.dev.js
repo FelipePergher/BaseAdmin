@@ -28,15 +28,15 @@ module.exports = merge(common, {
                 {
                     loader: "css-loader",
                     options: {
-                        minimize: false || {/* or CSSNano Options */ },
                         sourceMap: true
-
                     }
                 },
                 {
                     loader: "sass-loader",
                     options: {
-                        includePaths: glob.sync('node_modules').map((d) => path.join(__dirname, d))
+                        sassOptions: {
+                            includePaths: glob.sync('node_modules').map((d) => path.join(__dirname, d))
+                        }
                     }
                 }
             ]

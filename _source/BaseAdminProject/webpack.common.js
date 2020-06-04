@@ -1,6 +1,6 @@
 ﻿"use strict";
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const glob = require("glob");
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
