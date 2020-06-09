@@ -140,7 +140,7 @@ namespace BaseAdminProject
 
             IServiceScopeFactory scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
             SeedData.SeedRoles(scopeFactory).Wait();
-            SeedData.SeedAdminUser(scopeFactory, Configuration["Admin:Email"], Configuration["Admin:Password"]).Wait();
+            SeedData.SeedAdminUser(scopeFactory, Configuration["Admin:Email"], Configuration["Admin:Username"], Configuration["Admin:Password"]).Wait();
         }
     }
 }

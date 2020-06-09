@@ -50,7 +50,7 @@ namespace BaseAdminProject.Business.Core
             }
         }
 
-        public static async Task SeedAdminUser(IServiceScopeFactory scopeFactory, string email, string password)
+        public static async Task SeedAdminUser(IServiceScopeFactory scopeFactory, string email, string username, string password)
         {
             using (IServiceScope serviceScope = scopeFactory.CreateScope())
             {
@@ -62,7 +62,7 @@ namespace BaseAdminProject.Business.Core
                     var user = new BaseAdminUser
                     {
                         EmailConfirmed = true,
-                        UserName = email,
+                        UserName = username,
                         Email = email,
                     };
 
