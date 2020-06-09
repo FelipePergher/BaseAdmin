@@ -9,8 +9,8 @@
 }
 
 [data-notify="container"] {
-    width: 450px !important;
-    text-align: center;
+    width: calc(100% - 30px) !important;
+    max-width: 600px !important;
 }
 
 .form-group-invalid {

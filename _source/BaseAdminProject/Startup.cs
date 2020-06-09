@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Globalization;
 
 namespace BaseAdminProject
@@ -54,7 +55,6 @@ namespace BaseAdminProject
                 options.LoginPath = "/Account/Login";
                 options.LogoutPath = "/Account/Logout";
                 options.AccessDeniedPath = "/Account/AccessDenied";
-                options.SlidingExpiration = true;
             });
 
             services.AddControllersWithViews();

@@ -19,7 +19,6 @@ module.exports = merge(common, {
                     loader: 'file-loader',
                     options: {
                         name: 'css/[folder].bundle.css'
-
                     }
                 },
                 {

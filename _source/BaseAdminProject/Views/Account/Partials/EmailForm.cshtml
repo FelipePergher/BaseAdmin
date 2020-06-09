@@ -1,0 +1,45 @@
+﻿@model BaseAdminProject.Models.FormModels.EmailFormModel
+
+<form id="emailForm" asp-controller="Account" asp-action="UpdateEmail" method="post">
+    <input asp-for="UserId" />
+    <input asp-for="IsConfirmed" />
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="form-group">
+        <label asp-for="Email" class="form-control-label"></label>
+        <div class="input-group input-group-merge">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i class="fas fa-user"></i>
+                </span>
+            </div>
+
+            <input id="emailInput" asp-for="Email" class="form-control" />
+
+            <div class="input-group-append">
+                @if (Model.IsConfirmed)
+                {
+                    <span data-toggle="tooltip" title="Email confirmado" class="input-group-text text-success">
+                        <i class="fas fa-check"></i>
+                    </span>
+                }
+                else
+                {
+                    <button id="sendVerificationEmail" type="button" asp-controller="Account" asp-action="SendVerificationEmail" class="btn btn-outline-secondary">
+                        Enviar email de verificação
+                        <span class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="sr-only">Carregando...</span>
+                    </button>
+                }
+            </div>
+        </div>
+        <span asp-validation-for="Email" class="invalid-feedback"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Atualizar Email
+        <span class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span class="sr-only">Carregando...</span>
+    </button>
+</form>
+

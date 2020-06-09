@@ -135,5 +135,6 @@
     <Rule Id="SA1636" Action="Error" />
     <Rule Id="SA1638" Action="Error" />
     <Rule Id="SA1641" Action="Error" />
+    <Rule Id="SA1649" Action="Error" />
   </Rules>
 </RuleSet>

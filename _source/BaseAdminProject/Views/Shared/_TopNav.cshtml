@@ -206,17 +206,17 @@
                         <div class="dropdown-header noti-title">
                             <h6 class="text-overflow m-0">Welcome!</h6>
                         </div>
-                        <a asp-area="Identity" asp-page="/Account/Manage/Index" class="dropdown-item">
+                        <a asp-controller="Account" asp-action="Index" class="dropdown-item">
                             <i class="fas fa-user"></i>
                             <span>Meu Perfil</span>
                         </a>
 
-                        <a asp-area="Identity" asp-page="/Account/Manage/Email" class="dropdown-item">
+                        <a asp-page="/Account/Email" class="dropdown-item">
                             <i class="fas fa-envelope"></i>
                             <span>Email</span>
                         </a>
 
-                        <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="dropdown-item">
+                        <a asp-page="/Account/ChangePassword" class="dropdown-item">
                             <i class="fas fa-lock"></i>
                             <span>Trocar Senha</span>
                         </a>

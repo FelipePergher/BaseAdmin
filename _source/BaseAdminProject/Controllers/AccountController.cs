@@ -2,14 +2,10 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
-using System;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using BaseAdminProject.Areas.Identity.Pages.Account;
 using BaseAdminProject.Business.Core;
 using BaseAdminProject.Data.Models;
 using BaseAdminProject.Models.FormModels;
+using BaseAdminProject.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +13,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace BaseAdminProject.Controllers
 {
@@ -57,7 +57,7 @@ namespace BaseAdminProject.Controllers
             if (ModelState.IsValid)
             {
                 Microsoft.AspNetCore.Identity.SignInResult result;
-                var user = await _userManager.FindByEmailAsync(loginForm.EmailUsername);
+                BaseAdminUser user = await _userManager.FindByEmailAsync(loginForm.EmailUsername);
                 if (user != null)
                 {
                     result = await _signInManager.PasswordSignInAsync(user, loginForm.Password, loginForm.RememberMe, true);
@@ -165,7 +165,7 @@ namespace BaseAdminProject.Controllers
             IdentityResult result = await _userManager.ResetPasswordAsync(user, resetPasswordForm.Code, resetPasswordForm.Password);
             if (result.Succeeded)
             {
-                var isLocked = await _userManager.IsLockedOutAsync(user);
+                bool isLocked = await _userManager.IsLockedOutAsync(user);
 
                 if (isLocked)
                 {
@@ -205,20 +205,7 @@ namespace BaseAdminProject.Controllers
             BaseAdminUser user = await _userManager.FindByEmailAsync(resendConfirmEmailForm.Email);
             if (user != null)
             {
-                string userId = await _userManager.GetUserIdAsync(user);
-                string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-
-                string callbackUrl = Url.Action(
-                    "ConfirmEmail",
-                    "Account",
-                    values: new { userId, code },
-                    protocol: Request.Scheme);
-
-                await _emailSender.SendEmailAsync(
-                    resendConfirmEmailForm.Email,
-                    "Confirme seu email",
-                    $"Por favor confirme sua conta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
+                await SendConfirmationEmail(user, resendConfirmEmailForm.Email);
             }
 
             TempData[Globals.StatusMessageKey] = "Email de verificação enviado. Por favor confira seu email.!";
@@ -229,7 +216,7 @@ namespace BaseAdminProject.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        public async Task<IActionResult> ConfirmEmail(string userId, string code, string redirectUrl)
         {
             if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(code))
             {
@@ -242,12 +229,56 @@ namespace BaseAdminProject.Controllers
                     TempData[Globals.StatusMessageKey] = result.Succeeded ? "Obrigado por confirmar seu email." : "Erro ao confirmar seu email.";
                     TempData[Globals.StatusMessageTypeKey] = result.Succeeded ? Globals.StatusMessageTypeSuccess : Globals.StatusMessageTypeDanger;
 
+                    if (!string.IsNullOrEmpty(redirectUrl))
+                    {
+                        return Redirect(redirectUrl);
+                    }
+
                     return RedirectToAction(nameof(Login));
                 }
             }
 
             TempData[Globals.StatusMessageKey] = "Erro ao confirmar seu email.";
             TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeDanger;
+
+            return RedirectToAction(nameof(Login));
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmailChange(string userId, string email, string code, string redirectUrl)
+        {
+            if (userId == null || email == null || code == null)
+            {
+                TempData[Globals.StatusMessageKey] = "Erro ao trocar o email.";
+                TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeDanger;
+                return RedirectToAction(nameof(Login));
+            }
+
+            BaseAdminUser user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+            IdentityResult result = await _userManager.ChangeEmailAsync(user, email, code);
+            if (!result.Succeeded)
+            {
+                TempData[Globals.StatusMessageKey] = "Erro ao trocar o email.";
+                TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeDanger;
+                return RedirectToAction(nameof(Login));
+            }
+
+            await _signInManager.RefreshSignInAsync(user);
+
+            TempData[Globals.StatusMessageKey] = "Obrigado por confirmar sua troca de email.";
+            TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
+
+            if (!string.IsNullOrEmpty(redirectUrl))
+            {
+                return Redirect(redirectUrl);
+            }
 
             return RedirectToAction(nameof(Login));
         }
@@ -269,9 +300,198 @@ namespace BaseAdminProject.Controllers
             return View();
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            BaseAdminUser user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            string userName = await _userManager.GetUserNameAsync(user);
+            string userId = await _userManager.GetUserIdAsync(user);
+            string phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            string email = await _userManager.GetEmailAsync(user);
+
+            var profileForm = new ProfileViewModel
+            {
+                PhoneForm = new PhoneFormModel
+                {
+                    PhoneNumber = phoneNumber
+                },
+                UsernameForm = new UsernameFormModel
+                {
+                    UserId = userId,
+                    UserName = userName
+                },
+                EmailForm = new EmailFormModel
+                {
+                    UserId = userId,
+                    Email = email,
+                    IsConfirmed = await _userManager.IsEmailConfirmedAsync(user)
+                }
+            };
+
+            return View(profileForm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateUsername(UsernameFormModel usernameForm)
+        {
+            if (ModelState.IsValid)
+            {
+                BaseAdminUser user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return BadRequest("Alguma coisa deu errado!");
+                }
+
+                string userName = await _userManager.GetUserNameAsync(user);
+
+                if (usernameForm.UserName != userName)
+                {
+                    IdentityResult setUsernameResult = await _userManager.SetUserNameAsync(user, usernameForm.UserName);
+                    if (!setUsernameResult.Succeeded)
+                    {
+                        return BadRequest("Alguma coisa deu errado salvando o usuário!");
+                    }
+
+                    await _signInManager.RefreshSignInAsync(user);
+
+                    return Ok(new { message = "Seu usuário foi atualizado!", type = Globals.StatusMessageTypeSuccess });
+                }
+
+                return Ok(new { message = "Seu usuário não foi alterado!", type = Globals.StatusMessageTypeInfo });
+            }
+
+            return PartialView("Partials/UsernameForm", usernameForm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdatePhone(PhoneFormModel phoneForm)
+        {
+            if (ModelState.IsValid)
+            {
+                BaseAdminUser user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return BadRequest("Alguma coisa deu errado!");
+                }
+
+                string phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+                if (phoneForm.PhoneNumber != phoneNumber)
+                {
+                    IdentityResult setPhoneResult = await _userManager.SetPhoneNumberAsync(user, phoneForm.PhoneNumber);
+                    if (!setPhoneResult.Succeeded)
+                    {
+                        return BadRequest("Alguma coisa deu errado salvando o telefone!");
+                    }
+
+                    await _signInManager.RefreshSignInAsync(user);
+
+                    return Ok(new { message = "Seu número de telefone foi atualizado!", type = Globals.StatusMessageTypeSuccess });
+                }
+
+                return Ok(new { message = "Seu número de telefone não foi alterado!", type = Globals.StatusMessageTypeInfo });
+            }
+
+            return PartialView("Partials/PhoneForm", phoneForm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendVerificationEmail()
+        {
+            BaseAdminUser user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            string email = await _userManager.GetEmailAsync(user);
+            await SendConfirmationEmail(user, email, Url.Action("Index", "Account"));
+
+            return Ok(new { message = "Email de verificação enviado. Por favor confira seu email.", type = Globals.StatusMessageTypeInfo });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateEmail(EmailFormModel emailForm)
+        {
+            if (ModelState.IsValid)
+            {
+                BaseAdminUser user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return BadRequest("Alguma coisa deu errado!");
+                }
+
+                string email = await _userManager.GetEmailAsync(user);
+                if (emailForm.Email != email)
+                {
+                    string userId = await _userManager.GetUserIdAsync(user);
+                    string code = await _userManager.GenerateChangeEmailTokenAsync(user, emailForm.Email);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+                    string callbackUrl = Url.Action(
+                        "ConfirmEmailChange",
+                        "Account",
+                        values: new { userId, email = emailForm.Email, code, redirectUrl = Url.Action("Index", "Account") },
+                        protocol: Request.Scheme);
+
+                    await _emailSender.SendEmailAsync(
+                        emailForm.Email,
+                        "Confirme seu email",
+                        $"Por favor confirme sua conta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
+
+                    return Ok(new { message = "Link de confirmação de troca de email enviado. Por favor verifique seu email.", type = Globals.StatusMessageTypeSuccess });
+                }
+
+                return Ok(new { message = "Seu email não foi alterado!", type = Globals.StatusMessageTypeInfo });
+            }
+
+            return PartialView("Partials/EmailForm", emailForm);
+        }
+
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            ChangePasswordFormModel changePasswordForm = new ChangePasswordFormModel();
+            return View(changePasswordForm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordFormModel changePasswordForm)
+        {
+            if (ModelState.IsValid)
+            {
+                BaseAdminUser user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                IdentityResult changePasswordResult = await _userManager.ChangePasswordAsync(user, changePasswordForm.OldPassword, changePasswordForm.NewPassword);
+                if (!changePasswordResult.Succeeded)
+                {
+                    foreach (IdentityError error in changePasswordResult.Errors)
+                    {
+                        string description = error.Description == "Incorrect password." ? "Senha incorreta." : error.Description;
+                        ModelState.AddModelError(string.Empty, description);
+                    }
+
+                    return View(changePasswordForm);
+                }
+
+                await _signInManager.RefreshSignInAsync(user);
+                _logger.LogInformation("User changed their password successfully.");
+
+                TempData[Globals.StatusMessageKey] = "Sua senha foi atualizada com sucesso!";
+                TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
+
+                return RedirectToAction(nameof(ChangePassword));
+            }
+
+            return View(changePasswordForm);
         }
 
         public async Task<IActionResult> Logout(string returnUrl = null)
@@ -284,6 +504,28 @@ namespace BaseAdminProject.Controllers
             }
 
             return RedirectToAction(nameof(Login));
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private async Task SendConfirmationEmail(BaseAdminUser user, string email, string redirectUrl = "/")
+        {
+            string userId = await _userManager.GetUserIdAsync(user);
+            string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+            string callbackUrl = Url.Action(
+                "ConfirmEmail",
+                "Account",
+                values: new { userId, code, redirectUrl },
+                protocol: Request.Scheme);
+
+            await _emailSender.SendEmailAsync(
+                email,
+                "Confirme seu email",
+                $"Por favor confirme sua conta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
         }
 
         #endregion

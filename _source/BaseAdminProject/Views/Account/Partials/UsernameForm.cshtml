@@ -1,0 +1,25 @@
+﻿@model BaseAdminProject.Models.FormModels.UsernameFormModel
+
+<form id="usernameForm" asp-controller="Account" asp-action="UpdateUsername" method="post">
+    <input asp-for="UserId" />
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="form-group">
+        <label asp-for="UserName" class="form-control-label"></label>
+        <div class="input-group input-group-merge">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i class="fas fa-user"></i>
+                </span>
+            </div>
+            <input id="userNameInput" asp-for="UserName" class="form-control">
+        </div>
+        <span asp-validation-for="UserName" class="invalid-feedback"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Atualizar Usuário
+        <span class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span class="sr-only">Carregando...</span>
+    </button>
+</form>

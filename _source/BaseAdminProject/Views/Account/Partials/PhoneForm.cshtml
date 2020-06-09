@@ -1,0 +1,27 @@
+﻿@using BaseAdminProject.Business.Core
+@model BaseAdminProject.Models.FormModels.PhoneFormModel
+
+<form id="phoneForm" asp-controller="Account" asp-action="UpdatePhone" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="form-group">
+        <label asp-for="PhoneNumber" class="form-control-label"></label>
+        <div class="input-group input-group-merge">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i class="fas fa-phone"></i>
+                </span>
+            </div>
+
+            <input asp-for="PhoneNumber" class="form-control" data-mask="@Globals.MaskPhone" />
+        </div>
+        <span asp-validation-for="PhoneNumber" class="invalid-feedback"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Atualizar Telefone
+        <span class="d-none spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span class="sr-only">Carregando...</span>
+    </button>
+</form>
+

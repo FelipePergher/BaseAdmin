@@ -4,7 +4,7 @@ import "jquery-validation-unobtrusive";
 import "datatables.net";
 import "datatables.net-bs4";
 import 'bootstrap4-notify';
-import { DatatablesLanguage } from '../common/common';
+import { DatatablesLanguage, Notify } from '../common/common';
 
 export default (function () {
 
@@ -21,15 +21,7 @@ export default (function () {
                 url: "/api/user/getAll",
                 type: "GET",
                 error: function (e) {
-                    $.notify({
-                        icon: 'fa fa-exclamation-circle fa-2x',
-                        message: "Não foi possível carregar as informações! <br> Se o problema persistir contate o administrador!"
-                    }, {
-                        type: "danger",
-                        placement: {
-                            align: "center"
-                        },
-                    });
+                    Notify("danger", "Não foi possível carregar as informações! <br> Se o problema persistir contate o administrador!");
                 }
             },
             columns: [

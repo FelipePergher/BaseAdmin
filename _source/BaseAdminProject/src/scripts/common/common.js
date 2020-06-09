@@ -107,3 +107,15 @@ export function EyePassword() {
         }
     });
 }
+
+export function Notify(type, message) {
+    $.notify({
+        message: message
+    }, {
+        type: type,
+        placement: {
+            placement: "top",
+            align: "right"
+        }
+    });
+}

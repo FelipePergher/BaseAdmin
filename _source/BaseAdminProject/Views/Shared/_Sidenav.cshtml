@@ -4,7 +4,7 @@
     <div class="scrollbar-inner">
         <!-- Brand -->
         <div class="sidenav-header  d-flex  align-items-center">
-            <a class="navbar-brand" asp-action="Index" asp-controller="Account">
+            <a class="navbar-brand" asp-action="Index" asp-controller="Home">
                 <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
             <div class="ml-auto ">
@@ -26,7 +26,7 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
-                        <a class="nav-link @Html.GetActiveClass(Context.Request, Url.Action("Index", "Account"))" asp-controller="Account" asp-action="Index">
+                        <a class="nav-link @Html.GetActiveClass(Context.Request, Url.Action("Index", "Home"))" asp-controller="Home" asp-action="Index">
                             <i class="fas fa-home text-primary"></i>
                             <span class="nav-link-text">Home</span>
                         </a>

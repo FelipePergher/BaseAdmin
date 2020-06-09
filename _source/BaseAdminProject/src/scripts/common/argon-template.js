@@ -2,8 +2,10 @@
 import Cookies from 'js-cookie';
 import 'jquery.scrollbar';
 import 'jquery-scroll-lock';
-import "@creative-tim-official//argon-dashboard-free/assets/js/components/custom/form-control.min";
+import "@creative-tim-official/argon-dashboard-free/assets/js/components/custom/form-control.min";
 import "@creative-tim-official/argon-dashboard-free/assets/js/components/init/navbar.min";
+import "@creative-tim-official/argon-dashboard-free/assets/js/components/init/tooltip.min";
+import "@creative-tim-official/argon-dashboard-free/assets/js/components/vendor/scrollbar.min";
 import "@creative-tim-official/argon-dashboard-free/assets/js/components/vendor/scrollbar.min";
 
 export default (function () {

@@ -8,4 +8,3 @@ import '../../sass/reset-password/index.scss';
 import '../../sass/user/index.scss';
 import '../../sass/add-user/index.scss';
 import '../../sass/profile/index.scss';
-import '../../sass/email/index.scss';
