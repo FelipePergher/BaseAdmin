@@ -27,8 +27,8 @@ export default (function () {
             columns: [
                 { data: "name", name: "Name" },
                 { data: "email", name: "Email" },
-                { data: "confirmedAccount", name: "ConfirmedAccount" },
-                { data: "blockedAccount", name: "BlockedAccount" },
+                { data: "confirmedAccount", name: "ConfirmedAccount", searchable: false },
+                { data: "blockedAccount", name: "BlockedAccount", searchable: false },
                 { data: "role", title: "Regra", name: "Role" }
             ],
         });

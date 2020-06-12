@@ -10,12 +10,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using System;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Globalization;
 
 namespace BaseAdminProject
@@ -61,16 +64,22 @@ namespace BaseAdminProject
 
             services.AddAntiforgery();
 
-            // Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen(c =>
+            services.AddApiVersioning(p =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "BaseAdmin API",
-                    Version = "v1",
-                    Description = "BaseAdmin Api"
-                });
+                p.DefaultApiVersion = new ApiVersion(1, 0);
+                p.ReportApiVersions = true;
+                p.AssumeDefaultVersionWhenUnspecified = true;
             });
+
+            services.AddVersionedApiExplorer(p =>
+            {
+                p.GroupNameFormat = "'v'VVV";
+                p.SubstituteApiVersionInUrl = true;
+            });
+
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+            services.AddSwaggerGen();
 
             services.AddTransient<IEmailSender, EmailSender>(i => new EmailSender(
                   Configuration["EmailSender:Host"],
@@ -82,7 +91,7 @@ namespace BaseAdminProject
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -112,24 +121,35 @@ namespace BaseAdminProject
             app.UseHttpsRedirection();
             app.UseStaticFiles(new StaticFileOptions
             {
-                OnPrepareResponse = context => context.Context.Response.Headers.Add("Cache-Control", "public, max-age=31536000")
+                OnPrepareResponse = context =>
+                    context.Context.Response.Headers.Add("Cache-Control", "public, max-age=31536000")
             });
 
             app.UseCookiePolicy();
 
-            app.UseRouting();
+            app.UseRouting().UseApiVersioning();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
+            if (!env.IsProduction())
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BaseAdminApi V1");
-            });
+                // Enable middleware to serve generated Swagger as a JSON endpoint.
+                app.UseSwagger();
+
+                // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+                app.UseSwaggerUI(c =>
+                {
+                    foreach (var description in provider.ApiVersionDescriptions)
+                    {
+                        c.SwaggerEndpoint(
+                            $"/swagger/{description.GroupName}/swagger.json",
+                            description.GroupName.ToUpperInvariant());
+                    }
+
+                    c.DocExpansion(DocExpansion.List);
+                });
+            }
 
             app.UseEndpoints(endpoints =>
             {

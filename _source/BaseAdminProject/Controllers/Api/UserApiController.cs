@@ -28,7 +28,7 @@ namespace BaseAdminProject.Controllers.Api
         }
 
         [HttpGet("~/api/user/getAll")]
-        public IActionResult UserGetAll()
+        public IActionResult GetAll()
         {
             string adminEmail = _configuration["Admin:Email"];
 
