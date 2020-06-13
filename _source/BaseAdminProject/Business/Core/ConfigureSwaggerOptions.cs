@@ -21,7 +21,7 @@ namespace BaseAdminProject.Business.Core
 
         public void Configure(SwaggerGenOptions options)
         {
-            foreach (var description in _provider.ApiVersionDescriptions)
+            foreach (ApiVersionDescription description in _provider.ApiVersionDescriptions)
             {
                 options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
             }

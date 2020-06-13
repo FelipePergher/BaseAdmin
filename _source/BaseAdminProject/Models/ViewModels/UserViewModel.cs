@@ -10,12 +10,20 @@ namespace BaseAdminProject.Models.ViewModels
 
         public string Name { get; set; }
 
+        public string UserName { get; set; }
+
+        public string BirthdayDate { get; set; }
+
         public string Email { get; set; }
 
-        public string ConfirmedAccount { get; set; }
+        public DataTablesRender ConfirmedAccount { get; set; }
 
-        public string BlockedAccount { get; set; }
+        public DataTablesRender BlockedAccount { get; set; }
+
+        public DataTablesRender Active { get; set; }
 
         public string Role { get; set; }
+
+        public string Actions { get; set; }
     }
 }

@@ -38,7 +38,7 @@
 
 <div class="container-fluid mt--6">
     <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-7">
+        <div class="col-12 col-sm-10 col-md-8 col-xl-6">
             <div class="card-wrapper">
 
                 <div class="card">
@@ -54,6 +54,34 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <label class="form-control-label" asp-for="Name"></label>
+                                        <div class="input-group input-group-merge">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-user"></i>
+                                                </span>
+                                            </div>
+
+                                            <input asp-for="Name" class="form-control" placeholder="João da Silva">
+                                        </div>
+                                        <span asp-validation-for="Name" class="invalid-feedback"></span>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-control-label" asp-for="BirthdayDate"></label>
+                                        <div class="input-group input-group-merge">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-calendar-day"></i>
+                                                </span>
+                                            </div>
+
+                                            <input id="birthdayDate" asp-for="BirthdayDate" class="form-control">
+                                        </div>
+                                        <span asp-validation-for="BirthdayDate" class="invalid-feedback"></span>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label class="form-control-label" asp-for="UserName"></label>
                                         <div class="input-group input-group-merge">
                                             <div class="input-group-prepend">
@@ -62,7 +90,7 @@
                                                 </span>
                                             </div>
 
-                                            <input asp-for="UserName" class="form-control" placeholder="joãosilva">
+                                            <input asp-for="UserName" class="form-control" placeholder="joaosilva">
                                         </div>
                                         <span asp-validation-for="UserName" class="invalid-feedback"></span>
                                     </div>
@@ -90,7 +118,7 @@
                                                 </span>
                                             </div>
 
-                                            <input asp-for="PhoneNumber" class="form-control" data-mask="@Globals.MaskPhone" >
+                                            <input asp-for="PhoneNumber" class="form-control" data-mask="@Globals.MaskPhone" placeholder="(49) 9 9999-9999">
                                         </div>
                                         <span asp-validation-for="PhoneNumber" class="invalid-feedback"></span>
                                     </div>
@@ -150,6 +178,11 @@
                                             </div>
                                         </div>
                                         <span asp-validation-for="ConfirmPassword" class="invalid-feedback"></span>
+                                    </div>
+                                    
+                                    <div class="custom-control custom-control-alternative custom-checkbox mb-3">
+                                        <input asp-for="Active" class="custom-control-input">
+                                        <label asp-for="Active" class="custom-control-label"></label>
                                     </div>
 
                                     <button type="submit" class="btn btn-primary float-right">

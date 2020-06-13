@@ -2,8 +2,8 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
-using System.ComponentModel;
 using BaseAdminProject.Business.Core;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace BaseAdminProject.Models.FormModels

@@ -2,15 +2,15 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BaseAdminProject.Data;
 using BaseAdminProject.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BaseAdminProject.Business.Core
 {
@@ -65,6 +65,9 @@ namespace BaseAdminProject.Business.Core
                         UserName = username,
                         Email = email,
                     };
+
+                    user.UserInfo.Active = true;
+                    user.UserInfo.Name = username;
 
                     IdentityResult result = await userManager.CreateAsync(user, password);
 

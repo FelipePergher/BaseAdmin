@@ -8,5 +8,11 @@ namespace BaseAdminProject.Data.Models
 {
     public class BaseAdminUser : IdentityUser
     {
+        public BaseAdminUser()
+        {
+            UserInfo = new UserInfo();
+        }
+
+        public UserInfo UserInfo { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 import "jquery-validation";
 import "jquery-validation-unobtrusive";
 import "jquery-mask-plugin";
-import { SetupValidator, EyePassword } from '../common/common';
+import { SetupValidator, EyePassword, InitCalendar } from '../common/common';
 
 export default (function () {
 
@@ -18,6 +18,8 @@ export default (function () {
 
     function initLoginForm() {
         EyePassword();
+
+        InitCalendar("#birthdayDate");
 
         $("#addUserForm").submit(function (e) {
             let form = $(this);

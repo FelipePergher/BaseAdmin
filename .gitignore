@@ -33,3 +33,5 @@ msbuild.wrn
 _source/BaseAdminProject/node_modules/
 _source/BaseAdminProject/wwwroot/dist/
 _design/argon-dashboard-master/
+_source/BaseAdminProject/wwwroot/images/media-cache/
+_source/BaseAdminProject/wwwroot/img/

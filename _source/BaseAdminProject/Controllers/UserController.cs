@@ -2,9 +2,6 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 using BaseAdminProject.Business.Core;
 using BaseAdminProject.Data.Models;
 using BaseAdminProject.Models.FormModels;
@@ -12,11 +9,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace BaseAdminProject.Controllers
 {
     [Authorize(Roles = Roles.Admin)]
+    [AutoValidateAntiforgeryToken]
     public class UserController : Controller
     {
         private readonly UserManager<BaseAdminUser> _userManager;
@@ -41,7 +46,7 @@ namespace BaseAdminProject.Controllers
         [HttpGet]
         public IActionResult AddUser()
         {
-            AddUserFormModel addUser = new AddUserFormModel();
+            var addUser = new AddUserFormModel();
             return View(addUser);
         }
 
@@ -50,14 +55,18 @@ namespace BaseAdminProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                BaseAdminUser user = new BaseAdminUser
+                var user = new BaseAdminUser
                 {
                     UserName = addUser.UserName,
                     Email = addUser.Email,
                     PhoneNumber = addUser.PhoneNumber,
                 };
 
-                var result = await _userManager.CreateAsync(user, addUser.Password);
+                user.UserInfo.Active = addUser.Active;
+                user.UserInfo.Name = addUser.Name;
+                user.UserInfo.BirthdayDate = DateTime.Parse(addUser.BirthdayDate);
+
+                IdentityResult result = await _userManager.CreateAsync(user, addUser.Password);
 
                 if (result.Succeeded)
                 {
@@ -67,14 +76,20 @@ namespace BaseAdminProject.Controllers
                         await _userManager.AddToRoleAsync(user, applicationRole.Name);
                     }
 
+                    string userId = await _userManager.GetUserIdAsync(user);
                     string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    string callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code },
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+                    string callbackUrl = Url.Action(
+                        "ConfirmEmail",
+                        "Account",
+                        values: new { userId, code, redirectUrl = Url.Action("Index", "Home") },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(user.Email, "Confirme seu email", $"Por favor confirme sua conta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
+                    await _emailSender.SendEmailAsync(
+                        user.Email,
+                        "Confirme seu email",
+                        $"Por favor confirme sua conta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
 
                     TempData[Globals.StatusMessageKey] = "Usuário adicionado com sucesso!";
                     TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
@@ -86,24 +101,6 @@ namespace BaseAdminProject.Controllers
             }
 
             return View(addUser);
-        }
-
-        [HttpGet]
-        public IActionResult EditUser(string id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult EditUser()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult DeleteUser()
-        {
-            return Ok();
         }
     }
 }

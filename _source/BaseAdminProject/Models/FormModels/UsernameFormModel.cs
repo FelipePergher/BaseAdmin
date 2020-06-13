@@ -2,9 +2,9 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
-using System.ComponentModel.DataAnnotations;
 using BaseAdminProject.Business.Core;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace BaseAdminProject.Models.FormModels
 {

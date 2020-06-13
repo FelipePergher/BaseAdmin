@@ -2,12 +2,12 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using BaseAdminProject.Business.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BaseAdminProject.Models.FormModels
 {
@@ -25,6 +25,17 @@ namespace BaseAdminProject.Models.FormModels
         [DataType(DataType.EmailAddress)]
         [Remote("IsUsedEmail", "UserApi", ErrorMessage = "Email já utilizado!")]
         public string Email { get; set; }
+
+        [Display(Name = "Nome Completo")]
+        [Required(ErrorMessage = Globals.RequiredMessage)]
+        [DataType(DataType.Text)]
+        [StringLength(20, ErrorMessage = "Limite de caracteres excede o máximo ({1}).")]
+        public string Name { get; set; }
+
+        [Display(Name = "Data de nascimento")]
+        [Required(ErrorMessage = Globals.RequiredMessage)]
+        [DataType(DataType.Text)]
+        public string BirthdayDate { get; set; }
 
         [Display(Name = "Número de telefone")]
         [DataType(DataType.PhoneNumber)]
@@ -53,5 +64,8 @@ namespace BaseAdminProject.Models.FormModels
         [PasswordPropertyText]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Usuário habilitado")]
+        public bool Active { get; set; }
     }
 }

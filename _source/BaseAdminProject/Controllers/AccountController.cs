@@ -12,8 +12,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -21,6 +23,7 @@ using System.Threading.Tasks;
 namespace BaseAdminProject.Controllers
 {
     [Authorize]
+    [AutoValidateAntiforgeryToken]
     public class AccountController : Controller
     {
         private readonly UserManager<BaseAdminUser> _userManager;
@@ -56,16 +59,30 @@ namespace BaseAdminProject.Controllers
 
             if (ModelState.IsValid)
             {
-                Microsoft.AspNetCore.Identity.SignInResult result;
-                BaseAdminUser user = await _userManager.FindByEmailAsync(loginForm.EmailUsername);
-                if (user != null)
+                string userEmailUpper = loginForm.EmailUsername.ToUpper();
+                BaseAdminUser user = _userManager.Users
+                                         .Include(x => x.UserInfo)
+                                         .FirstOrDefault(x => x.NormalizedEmail == userEmailUpper || x.NormalizedUserName == userEmailUpper);
+
+                if (user == null)
                 {
-                    result = await _signInManager.PasswordSignInAsync(user, loginForm.Password, loginForm.RememberMe, true);
+                    ModelState.AddModelError(
+                        string.Empty,
+                        "Tentativa de login inválida.");
+
+                    return View(loginForm);
                 }
-                else
+
+                // Todo test
+                if (!user.UserInfo.Active)
                 {
-                    result = await _signInManager.PasswordSignInAsync(loginForm.EmailUsername, loginForm.Password, loginForm.RememberMe, true);
+                    ModelState.AddModelError(
+                        string.Empty,
+                        "Conta desativada pelos administradores.");
+                    return View(loginForm);
                 }
+
+                Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(user, loginForm.Password, loginForm.RememberMe, true);
 
                 if (result.Succeeded)
                 {
@@ -455,7 +472,7 @@ namespace BaseAdminProject.Controllers
         [HttpGet]
         public IActionResult ChangePassword()
         {
-            ChangePasswordFormModel changePasswordForm = new ChangePasswordFormModel();
+            var changePasswordForm = new ChangePasswordFormModel();
             return View(changePasswordForm);
         }
 

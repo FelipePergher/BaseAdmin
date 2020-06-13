@@ -17,6 +17,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using SixLabors.ImageSharp.Memory;
+using SixLabors.ImageSharp.Web.Caching;
+using SixLabors.ImageSharp.Web.Commands;
+using SixLabors.ImageSharp.Web.DependencyInjection;
+using SixLabors.ImageSharp.Web.Processors;
+using SixLabors.ImageSharp.Web.Providers;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Globalization;
@@ -35,6 +41,27 @@ namespace BaseAdminProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddImageSharpCore(
+                    options =>
+                    {
+                        options.Configuration = SixLabors.ImageSharp.Configuration.Default;
+                        options.MaxBrowserCacheDays = 7;
+                        options.MaxCacheDays = 365;
+                        options.CachedNameLength = 8;
+                    })
+                .SetRequestParser<QueryCollectionRequestParser>()
+                .SetMemoryAllocator(provider => ArrayPoolMemoryAllocator.CreateWithMinimalPooling())
+                .Configure<PhysicalFileSystemCacheOptions>(options =>
+                {
+                    options.CacheFolder = "images/media-cache";
+                })
+                .SetCache<PhysicalFileSystemCache>()
+                .SetCacheHash<CacheHash>()
+                .AddProvider<PhysicalFileSystemProvider>()
+                .AddProcessor<ResizeWebProcessor>()
+                .AddProcessor<FormatWebProcessor>()
+                .AddProcessor<BackgroundColorWebProcessor>();
+
             services.AddDbContext<BaseAdminDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<BaseAdminUser, IdentityRole>(options =>
@@ -118,6 +145,8 @@ namespace BaseAdminProject
                 SupportedUICultures = supportedCultures
             });
 
+            app.UseImageSharp();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles(new StaticFileOptions
             {
@@ -140,7 +169,7 @@ namespace BaseAdminProject
                 // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
                 app.UseSwaggerUI(c =>
                 {
-                    foreach (var description in provider.ApiVersionDescriptions)
+                    foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
                     {
                         c.SwaggerEndpoint(
                             $"/swagger/{description.GroupName}/swagger.json",

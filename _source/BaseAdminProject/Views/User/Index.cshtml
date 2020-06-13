@@ -44,21 +44,26 @@
         <div class="col">
             <div class="card">
                 <!-- Card header -->
-                <div class="card-header">
-                    <h3 class="mb-0">Usuários</h3>
-                    <p class="text-sm mb-0">
-                        Usuários da aplicação
-                    </p>
+                <div class="card-header d-flex justify-content-between">
+                    <h3 class="mb-0">@ViewData["Title"]</h3>
+                    <div class="custom-control custom-control-alternative custom-checkbox mb-3">
+                        <input id="showInactive" type="checkbox" class="custom-control-input">
+                        <label for="showInactive" class="custom-control-label">Mostrar inativos</label>
+                    </div>
                 </div>
                 <div class="table-responsive py-4">
                     <table class="table table-flush text-center w-100" id="userDataTable">
                         <thead class="thead-light">
                             <tr>
+                                <th>Nome</th>
+                                <th>Nascimento</th>
                                 <th>Username</th>
                                 <th>Email</th>
-                                <th>Conta Confirmado</th>
-                                <th>Conta Bloqueada</th>
+                                <th>Confirmada</th>
+                                <th>Habilitada</th>
+                                <th>Bloqueada</th>
                                 <th>Regra</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody></tbody>

@@ -1,4 +1,7 @@
 ﻿"use strict";
+import Swal from 'sweetalert2';
+import 'bootstrap-datepicker';
+import 'bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-br.min';
 
 export function DatatablesLanguage() {
     return {
@@ -119,3 +122,26 @@ export function Notify(type, message) {
         }
     });
 }
+
+export function InitCalendar(elementId) {
+    $(elementId).datepicker({
+        clearBtn: true,
+        format: "dd/mm/yyyy",
+        language: "pt-BR",
+        templates: {
+            leftArrow: '<i class="fas fa-chevron-left"></i>',
+            rightArrow: '<i class="fas fa-chevron-right"></i>'
+        }
+    });
+}
+
+export const SwalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false,
+    reverseButtons: true,
+    confirmButtonText: 'Sim',
+    cancelButtonText: 'Não',
+});
