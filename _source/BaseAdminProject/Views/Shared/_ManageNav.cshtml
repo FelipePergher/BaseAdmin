@@ -2,7 +2,10 @@
 
 <div class="list-group">
     <a asp-controller="Account" asp-action="Index" class="list-group-item list-group-item-action @Html.GetActiveClass(Context.Request, Url.Action("Index", "Account"))">
-        Profile
+        Perfil
+    </a>
+    <a asp-controller="Account" asp-action="PersonalInfo" class="list-group-item list-group-item-action @Html.GetActiveClass(Context.Request, Url.Action("PersonalInfo", "Account"))">
+        Informações Pessoais
     </a>
     <a asp-controller="Account" asp-action="ChangePassword" class="list-group-item list-group-item-action @Html.GetActiveClass(Context.Request, Url.Action("ChangePassword", "Account"))">
         Senha

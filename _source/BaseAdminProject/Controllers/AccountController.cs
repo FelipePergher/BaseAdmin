@@ -511,6 +511,70 @@ namespace BaseAdminProject.Controllers
             return View(changePasswordForm);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> PersonalInfo()
+        {
+            BaseAdminUser user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var userInfo = _userManager.Users.Include(x => x.UserInfo).FirstOrDefault(x => x.Id == user.Id)?.UserInfo;
+
+            if (userInfo == null)
+            {
+                return BadRequest();
+            }
+
+            var personalInfoForm = new PersonalInfoFormModel
+            {
+                Name = userInfo.Name,
+                BirthdayDate = userInfo.BirthdayDate.ToShortDateString()
+            };
+
+            return View(personalInfoForm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PersonalInfo(PersonalInfoFormModel personalInfoForm)
+        {
+            if (ModelState.IsValid)
+            {
+                BaseAdminUser user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                var userWithInfo = _userManager.Users.Include(x => x.UserInfo).FirstOrDefault(x => x.Id == user.Id);
+
+                if (userWithInfo?.UserInfo == null)
+                {
+                    return NotFound();
+                }
+
+                userWithInfo.UserInfo.Name = personalInfoForm.Name;
+                userWithInfo.UserInfo.BirthdayDate = DateTime.Parse(personalInfoForm.BirthdayDate);
+
+                var result = await _userManager.UpdateAsync(userWithInfo);
+
+                if (result.Succeeded)
+                {
+                    TempData[Globals.StatusMessageKey] = "Sua informações foram atualizadas com sucesso!";
+                    TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeSuccess;
+
+                    return RedirectToAction(nameof(PersonalInfo));
+                }
+
+                TempData[Globals.StatusMessageKey] = "Sua informações não foram atualizadas!";
+                TempData[Globals.StatusMessageTypeKey] = Globals.StatusMessageTypeDanger;
+            }
+
+            return View(personalInfoForm);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Logout(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();

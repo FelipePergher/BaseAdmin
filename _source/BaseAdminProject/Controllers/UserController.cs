@@ -60,11 +60,13 @@ namespace BaseAdminProject.Controllers
                     UserName = addUser.UserName,
                     Email = addUser.Email,
                     PhoneNumber = addUser.PhoneNumber,
+                    UserInfo = new UserInfo
+                    {
+                        Active = addUser.Active,
+                        Name = addUser.Name,
+                        BirthdayDate = DateTime.Parse(addUser.BirthdayDate)
+                    }
                 };
-
-                user.UserInfo.Active = addUser.Active;
-                user.UserInfo.Name = addUser.Name;
-                user.UserInfo.BirthdayDate = DateTime.Parse(addUser.BirthdayDate);
 
                 IdentityResult result = await _userManager.CreateAsync(user, addUser.Password);
 

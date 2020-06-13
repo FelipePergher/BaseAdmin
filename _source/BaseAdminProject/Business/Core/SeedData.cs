@@ -64,10 +64,12 @@ namespace BaseAdminProject.Business.Core
                         EmailConfirmed = true,
                         UserName = username,
                         Email = email,
+                        UserInfo = new UserInfo
+                        {
+                            Active = true,
+                            Name = username,
+                        }
                     };
-
-                    user.UserInfo.Active = true;
-                    user.UserInfo.Name = username;
 
                     IdentityResult result = await userManager.CreateAsync(user, password);
 

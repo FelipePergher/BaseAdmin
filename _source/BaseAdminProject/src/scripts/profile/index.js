@@ -2,7 +2,6 @@
 import "jquery-validation";
 import "jquery-validation-unobtrusive";
 import "jquery-mask-plugin";
-import 'bootstrap4-notify';
 import { SetupValidator, Notify } from '../common/common';
 
 export default (function () {
