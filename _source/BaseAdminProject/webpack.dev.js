@@ -1,6 +1,5 @@
 ﻿const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
-const webpack = require('webpack');
 const glob = require("glob");
 const path = require('path');
 
@@ -11,7 +10,8 @@ module.exports = merge(common, {
         hot: true
     },
     plugins: [
-    ], module: {
+    ], 
+    module: {
         rules: [{
             test: /\.scss$/,
             use: [
