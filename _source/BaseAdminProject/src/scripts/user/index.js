@@ -3,7 +3,6 @@ import "jquery-validation";
 import "jquery-validation-unobtrusive";
 import "datatables.net";
 import "datatables.net-bs4";
-import 'bootstrap4-notify';
 import { DatatablesLanguage, Notify, SwalWithBootstrapButtons } from '../common/common';
 
 export default (function () {

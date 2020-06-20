@@ -2,6 +2,7 @@
 import Swal from 'sweetalert2';
 import 'bootstrap-datepicker';
 import 'bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-br.min';
+import 'bootstrap4-notify';
 
 export function DatatablesLanguage() {
     return {
