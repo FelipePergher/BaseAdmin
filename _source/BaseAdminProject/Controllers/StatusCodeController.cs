@@ -21,15 +21,12 @@ namespace BaseAdminProject.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index(int code)
         {
-            switch (code)
+            return code switch
             {
-                case 404:
-                    return View("404");
-                case 500:
-                    return View("500");
-                default:
-                    return View("500");
-            }
+                404 => View("404"),
+                500 => View("500"),
+                _ => View("500")
+            };
         }
     }
 }

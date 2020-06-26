@@ -27,7 +27,9 @@
                             <li class="breadcrumb-item">
                                 <a asp-controller="User" asp-action="Index"><i class="fas fa-users"></i> Usuários</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-user-plus"></i> @ViewData["Title"]</li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                @ViewData["Title"]
+                            </li>
                         </ol>
                     </nav>
                 </div>

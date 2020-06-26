@@ -39,8 +39,8 @@ namespace BaseAdminProject.Controllers.Api
                 .ToList()
                 .Select(x =>
                 {
-                    var isEmailConfirmed = _userManager.IsEmailConfirmedAsync(x).Result;
-                    var isLockout = x.LockoutEnd != null;
+                    bool isEmailConfirmed = _userManager.IsEmailConfirmedAsync(x).Result;
+                    bool isLockout = x.LockoutEnd != null;
                     return new UserViewModel
                     {
                         UserId = x.Id,

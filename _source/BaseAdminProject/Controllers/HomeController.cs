@@ -2,11 +2,9 @@
 // Copyright (c) Felipe Pergher. All Rights Reserved.
 // </copyright>
 
-using BaseAdminProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 
 namespace BaseAdminProject.Controllers
 {
@@ -23,12 +21,6 @@ namespace BaseAdminProject.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
