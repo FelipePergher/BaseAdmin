@@ -131,8 +131,22 @@ namespace BaseAdminProject
                 app.UseStatusCodePagesWithReExecute("/StatusCode", "?code={0}");
 
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseHsts(x => x.MaxAge(365).IncludeSubdomains());
             }
+
+            app.UseXContentTypeOptions();
+            app.UseReferrerPolicy(x => x.NoReferrer());
+            app.UseXXssProtection(x => x.EnabledWithBlockMode());
+            app.UseXfo(x => x.Deny());
+
+            app.UseCsp(opts => opts
+                .BlockAllMixedContent()
+                .StyleSources(s => s.Self().UnsafeInline().CustomSources("fonts.googleapis.com", "fonts.gstatic.com"))
+                .FontSources(s => s.Self().CustomSources("fonts.googleapis.com", "fonts.gstatic.com", "data:"))
+                .FormActions(s => s.Self())
+                .FrameAncestors(s => s.Self())
+                .ImageSources(s => s.Self().CustomSources("via.placeholder.com", "data:"))
+                .ScriptSources(s => s.Self()));
 
             CultureInfo[] supportedCultures =
             {
@@ -154,6 +168,8 @@ namespace BaseAdminProject
                 OnPrepareResponse = context =>
                     context.Context.Response.Headers.Add("Cache-Control", "public, max-age=31536000")
             });
+
+            app.UseXRobotsTag(options => options.NoIndex().NoFollow());
 
             app.UseCookiePolicy();
 

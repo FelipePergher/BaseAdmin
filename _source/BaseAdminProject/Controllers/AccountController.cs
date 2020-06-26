@@ -220,7 +220,8 @@ namespace BaseAdminProject.Controllers
             }
 
             BaseAdminUser user = await _userManager.FindByEmailAsync(resendConfirmEmailForm.Email);
-            if (user != null)
+
+            if (user != null && !user.EmailConfirmed)
             {
                 await SendConfirmationEmail(user, resendConfirmEmailForm.Email);
             }
@@ -520,7 +521,7 @@ namespace BaseAdminProject.Controllers
                 return BadRequest();
             }
 
-            var userInfo = _userManager.Users.Include(x => x.UserInfo).FirstOrDefault(x => x.Id == user.Id)?.UserInfo;
+            UserInfo userInfo = _userManager.Users.Include(x => x.UserInfo).FirstOrDefault(x => x.Id == user.Id)?.UserInfo;
 
             if (userInfo == null)
             {
@@ -547,7 +548,7 @@ namespace BaseAdminProject.Controllers
                     return NotFound();
                 }
 
-                var userWithInfo = _userManager.Users.Include(x => x.UserInfo).FirstOrDefault(x => x.Id == user.Id);
+                BaseAdminUser userWithInfo = _userManager.Users.Include(x => x.UserInfo).FirstOrDefault(x => x.Id == user.Id);
 
                 if (userWithInfo?.UserInfo == null)
                 {
@@ -557,7 +558,7 @@ namespace BaseAdminProject.Controllers
                 userWithInfo.UserInfo.Name = personalInfoForm.Name;
                 userWithInfo.UserInfo.BirthdayDate = DateTime.Parse(personalInfoForm.BirthdayDate);
 
-                var result = await _userManager.UpdateAsync(userWithInfo);
+                IdentityResult result = await _userManager.UpdateAsync(userWithInfo);
 
                 if (result.Succeeded)
                 {
