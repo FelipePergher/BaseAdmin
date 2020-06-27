@@ -73,7 +73,6 @@ namespace BaseAdminProject.Controllers
                     return View(loginForm);
                 }
 
-                // Todo test
                 if (!user.UserInfo.Active)
                 {
                     ModelState.AddModelError(

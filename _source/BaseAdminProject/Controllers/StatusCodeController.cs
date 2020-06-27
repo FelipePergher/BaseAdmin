@@ -4,20 +4,12 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace BaseAdminProject.Controllers
 {
     [Authorize]
     public class StatusCodeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public StatusCodeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index(int code)
         {

@@ -10,9 +10,9 @@
                     <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
                          data-target="#sidenav-main">
                         <div class="sidenav-toggler-inner">
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
+                            <i class="sidenav-toggler-line" aria-hidden="true"></i>
+                            <i class="sidenav-toggler-line" aria-hidden="true"></i>
+                            <i class="sidenav-toggler-line" aria-hidden="true"></i>
                         </div>
                     </div>
                 </li>
@@ -36,18 +36,18 @@
                             <h6 class="text-overflow m-0">Bem vindo!</h6>
                         </div>
                         <a asp-controller="Account" asp-action="Index" class="dropdown-item">
-                            <i class="fas fa-user"></i>
+                            <i class="fas fa-user" aria-hidden="true"></i>
                             <span>Meu Perfil</span>
                         </a>
 
                         <a asp-page="/Account/ChangePassword" class="dropdown-item">
-                            <i class="fas fa-lock"></i>
+                            <i class="fas fa-lock" aria-hidden="true"></i>
                             <span>Trocar Senha</span>
                         </a>
 
                         <div class="dropdown-divider"></div>
                         <a asp-controller="Account" asp-action="Logout" class="dropdown-item">
-                            <i class="fas fa-sign-out-alt"></i>
+                            <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
                             <span>Sair</span>
                         </a>
                     </div>

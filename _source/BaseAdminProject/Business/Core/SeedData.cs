@@ -33,8 +33,6 @@ namespace BaseAdminProject.Business.Core
         {
             using (IServiceScope serviceScope = scopeFactory.CreateScope())
             {
-                BaseAdminDbContext dbContext = serviceScope.ServiceProvider.GetService<BaseAdminDbContext>();
-
                 RoleManager<IdentityRole> roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
                 foreach (string role in Roles)

@@ -36,7 +36,7 @@ namespace BaseAdminProject.Controllers.Api
             var data = _userManager.Users
                 .Include(x => x.UserInfo)
                 .Where(x => x.Email.ToLower() != adminEmail.ToLower())
-                .ToList()
+                .AsEnumerable()
                 .Select(x =>
                 {
                     bool isEmailConfirmed = _userManager.IsEmailConfirmedAsync(x).Result;

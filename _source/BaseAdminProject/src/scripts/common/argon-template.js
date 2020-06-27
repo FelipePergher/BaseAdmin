@@ -48,7 +48,6 @@ export default (function () {
 
             var $this = $(this);
             var action = $this.data('action');
-            var target = $this.data('target');
 
             // Manage actions
             switch (action) {
@@ -61,7 +60,6 @@ export default (function () {
                     break;
 
                 case 'search-show':
-                    target = $this.data('target');
                     $('body').removeClass('g-navbar-search-show').addClass('g-navbar-search-showing');
 
                     setTimeout(function () {
@@ -76,7 +74,6 @@ export default (function () {
                     break;
 
                 case 'search-close':
-                    target = $this.data('target');
                     $('body').removeClass('g-navbar-search-shown');
 
                     setTimeout(function () {

@@ -20,7 +20,9 @@
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item">
-                                <a asp-controller="Account" asp-action="Index"><i class="fas fa-home"></i></a>
+                                <a asp-controller="Account" asp-action="Index">
+                                    <i class="fas fa-home" aria-hidden="true"></i>
+                                </a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
                         </ol>
@@ -52,18 +54,18 @@
                     </div>
                 </div>
                 <div class="table-responsive py-4">
-                    <table class="table table-flush text-center w-100" id="userDataTable">
+                    <table class="table table-flush text-center w-100" id="userDataTable" aria-describedby="Tabela de usuários">
                         <thead class="thead-light">
                             <tr>
-                                <th>Nome</th>
-                                <th>Nascimento</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Confirmada</th>
-                                <th>Habilitada</th>
-                                <th>Bloqueada</th>
-                                <th>Regra</th>
-                                <th>Ações</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Nascimento</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Confirmada</th>
+                                <th scope="col">Habilitada</th>
+                                <th scope="col">Bloqueada</th>
+                                <th scope="col">Regra</th>
+                                <th scope="col">Ações</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
