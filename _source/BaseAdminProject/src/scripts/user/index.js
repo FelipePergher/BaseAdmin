@@ -18,8 +18,8 @@ export default (function () {
     function initTable() {
         $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
-                let showInactive = $("#showInactive").is(":checked");
-                let activeAccount = data[5];
+                const showInactive = $("#showInactive").is(":checked");
+                const activeAccount = data[5];
                 if (activeAccount === "True" || showInactive) {
                     return true;
                 }

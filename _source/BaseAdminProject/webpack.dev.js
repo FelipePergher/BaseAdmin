@@ -9,8 +9,7 @@ module.exports = merge(common, {
     devServer: {
         hot: true
     },
-    plugins: [
-    ], 
+    plugins: [],
     module: {
         rules: [{
             test: /\.scss$/,

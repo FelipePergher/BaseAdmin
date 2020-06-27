@@ -22,9 +22,9 @@ export default (function () {
     function phoneForm() {
         $("#phoneForm").submit(function (e) {
             e.preventDefault();
-            let form = $(this);
+            const form = $(this);
             if (form.valid()) {
-                let submitButton = form.find("button[type='submit']");
+                const submitButton = form.find("button[type='submit']");
                 $(submitButton).prop("disabled", "disabled").addClass("disabled");
                 $(submitButton).children("span").removeClass("d-none").show();
 
@@ -55,9 +55,9 @@ export default (function () {
 
         $("#usernameForm").submit(function (e) {
             e.preventDefault();
-            let form = $(this);
+            const form = $(this);
             if (form.valid()) {
-                let submitButton = form.find("button[type='submit']");
+                const submitButton = form.find("button[type='submit']");
                 $(submitButton).prop("disabled", "disabled").addClass("disabled");
                 $(submitButton).children("span").removeClass("d-none").show();
 
@@ -85,7 +85,7 @@ export default (function () {
 
     function sendVerificationEmail() {
         $("#sendVerificationEmail").click(function () {
-            let button = $(this);
+            const button = $(this);
             $(button).prop("disabled", "disabled").addClass("disabled");
             $(button).children("span").removeClass("d-none").show();
 
@@ -108,9 +108,9 @@ export default (function () {
 
         $("#emailForm").submit(function (e) {
             e.preventDefault();
-            let form = $(this);
+            const form = $(this);
             if (form.valid()) {
-                let submitButton = form.find("button[type='submit']");
+                const submitButton = form.find("button[type='submit']");
                 $(submitButton).prop("disabled", "disabled").addClass("disabled");
                 $(submitButton).children("span").removeClass("d-none").show();
 

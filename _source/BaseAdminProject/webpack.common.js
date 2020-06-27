@@ -10,7 +10,7 @@ var appBasePath = './src/scripts/';
 var jsEntries = {};
 // We search for index.js files inside basePath folder and make those as entries
 fs.readdirSync(appBasePath).forEach(function (name) {
-    var indexFile = appBasePath + name + '/index.js';
+    var indexFile = `${appBasePath}${name}/index.js`;
     if (fs.existsSync(indexFile)) {
         jsEntries[name] = indexFile;
     }

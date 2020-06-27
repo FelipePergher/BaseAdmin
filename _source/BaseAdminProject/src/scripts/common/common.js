@@ -57,9 +57,9 @@ export function Select2Language() {
         inputTooLong: function (args) {
             var overChars = args.input.length - args.maximum;
 
-            var message = "Apague " + overChars + " caracter";
+            var message = `Apague ${overChar} caracter`;
 
-            if (overChars != 1) {
+            if (overChars !== 1) {
                 message += "es";
             }
 
@@ -68,21 +68,15 @@ export function Select2Language() {
         inputTooShort: function (args) {
             var remainingChars = args.minimum - args.input.length;
 
-            var message = "Digite " + remainingChars + " ou mais caracteres";
-
-            return message;
+            return `Digite ${remainingChars} ou mais caracteres`;
         },
         loadingMore: function () {
             return "Carregando mais resultados…";
         },
         maximumSelected: function (args) {
-            var message = "Você só pode selecionar " + args.maximum + " ite";
+            var message = `Você só pode selecionar ${args.maximum} ite`;
 
-            if (args.maximum == 1) {
-                message += "m";
-            } else {
-                message += "ns";
-            }
+            message += args.maximum === 1 ? "m" : "ns";
 
             return message;
         },
@@ -100,8 +94,8 @@ export function Select2Language() {
 
 export function EyePassword() {
     $(".eyePassword").click(function () {
-        let icon = $(this).find("i");
-        let inputPassword = $(this).siblings("input");
+        const icon = $(this).find("i");
+        const inputPassword = $(this).siblings("input");
         if (icon.hasClass("fa-eye")) {
             icon.removeClass("fa-eye").addClass("fa-eye-slash");
             inputPassword.attr("type", "password");

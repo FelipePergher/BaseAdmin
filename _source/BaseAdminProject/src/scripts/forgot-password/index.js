@@ -17,9 +17,9 @@ export default (function () {
 
     function initForgotForm() {
         $("#forgotPasswordForm").submit(function (e) {
-            let form = $(this);
+            const form = $(this);
             if (form.valid()) {
-                let submitButton = $(this).find("button[type='submit']");
+                const submitButton = $(this).find("button[type='submit']");
                 $(submitButton).prop("disabled", "disabled").addClass("disabled");
                 $(submitButton).children("span").removeClass("d-none");
             }

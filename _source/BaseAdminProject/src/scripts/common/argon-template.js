@@ -15,33 +15,36 @@ export default (function () {
     });
 
     function initPage() {
+        initNavbar();
+    }
+
+    function initNavbar() {
         var $sidenavState = Cookies.get('sidenav-state') ? Cookies.get('sidenav-state') : 'pinned';
 
-        if ($(window).width() > 1200) {
-            if ($sidenavState == 'pinned') {
+        const windowWidth = $(window).width();
+
+        if (windowWidth > 1200) {
+            if ($sidenavState === 'pinned') {
                 pinSidenav();
             }
 
-            if (Cookies.get('sidenav-state') == 'unpinned') {
+            if (Cookies.get('sidenav-state') === 'unpinned') {
                 unpinSidenav();
             }
-
-            $(window).resize(function () {
-                if ($('body').hasClass('g-sidenav-show') && !$('body').hasClass('g-sidenav-pinned')) {
-                    $('body').removeClass('g-sidenav-show').addClass('g-sidenav-hidden');
-                }
-            });
         }
-
-        if ($(window).width() < 1200) {
+        else {
             $('body').removeClass('g-sidenav-hide').addClass('g-sidenav-hidden');
             $('body').removeClass('g-sidenav-show');
-            $(window).resize(function () {
-                if ($('body').hasClass('g-sidenav-show') && !$('body').hasClass('g-sidenav-pinned')) {
-                    $('body').removeClass('g-sidenav-show').addClass('g-sidenav-hidden');
-                }
-            });
         }
+        initEvents();
+    }
+
+    function initEvents() {
+        $(window).resize(function () {
+            if ($('body').hasClass('g-sidenav-show') && !$('body').hasClass('g-sidenav-pinned')) {
+                $('body').removeClass('g-sidenav-show').addClass('g-sidenav-hidden');
+            }
+        });
 
         $("body").on("click", "[data-action]", function (e) {
             e.preventDefault();
@@ -57,39 +60,6 @@ export default (function () {
 
                 case 'sidenav-unpin':
                     unpinSidenav();
-                    break;
-
-                case 'search-show':
-                    $('body').removeClass('g-navbar-search-show').addClass('g-navbar-search-showing');
-
-                    setTimeout(function () {
-                        $('body').removeClass('g-navbar-search-showing').addClass('g-navbar-search-show');
-                    },
-                        150);
-
-                    setTimeout(function () {
-                        $('body').addClass('g-navbar-search-shown');
-                    },
-                        300)
-                    break;
-
-                case 'search-close':
-                    $('body').removeClass('g-navbar-search-shown');
-
-                    setTimeout(function () {
-                        $('body').removeClass('g-navbar-search-show').addClass('g-navbar-search-hiding');
-                    },
-                        150);
-
-                    setTimeout(function () {
-                        $('body').removeClass('g-navbar-search-hiding').addClass('g-navbar-search-hidden');
-                    },
-                        300);
-
-                    setTimeout(function () {
-                        $('body').removeClass('g-navbar-search-hidden');
-                    },
-                        500);
                     break;
             }
         });
@@ -115,7 +85,6 @@ export default (function () {
         $(window).on('load resize', function () {
             if ($('body').height() < 800) {
                 $('body').css('min-height', '100vh');
-                $('#footer-main').addClass('footer-auto-bottom');
             }
         });
     }
@@ -124,7 +93,7 @@ export default (function () {
         $('.sidenav-toggler').addClass('active');
         $('.sidenav-toggler').data('action', 'sidenav-unpin');
         $('body').removeClass('g-sidenav-hidden').addClass('g-sidenav-show g-sidenav-pinned');
-        $('body').append('<div class="backdrop d-xl-none" data-action="sidenav-unpin" data-target=' + $('#sidenav-main').data('target') + ' />');
+        $('body').append(`<div class="backdrop d-xl-none" data-action="sidenav-unpin" data-target='${$('#sidenav-main').data("target")}' />`);
 
         // Store the sidenav state in a cookie session
         Cookies.set('sidenav-state', 'pinned');
