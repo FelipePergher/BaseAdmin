@@ -1,25 +1,24 @@
-﻿"use strict";
+"use strict";
 import "jquery-validation";
 import "jquery-validation-unobtrusive";
 import "jquery-mask-plugin";
-import { SetupValidator, Notify } from '../common/common';
+import { SetupValidator, Notify } from "../common/common";
 
 export default (function () {
-
     SetupValidator($.validator);
 
     $(function () {
         initPage();
     });
 
-    function initPage() {
+    function initPage () {
         phoneForm();
         usernameForm();
         sendVerificationEmail();
         emailForm();
     }
 
-    function phoneForm() {
+    function phoneForm () {
         $("#phoneForm").submit(function (e) {
             e.preventDefault();
             const form = $(this);
@@ -32,8 +31,7 @@ export default (function () {
                     .done(function (data) {
                         if (!!data.message && !!data.type) {
                             Notify(data.type, data.message);
-                        }
-                        else {
+                        } else {
                             $("#phoneFormWrapper").html(data);
                             $.validator.unobtrusive.parse("#phoneForm");
                             phoneForm();
@@ -50,7 +48,7 @@ export default (function () {
         });
     }
 
-    function usernameForm() {
+    function usernameForm () {
         $("#userNameInput").blur().focus();
 
         $("#usernameForm").submit(function (e) {
@@ -65,8 +63,7 @@ export default (function () {
                     .done(function (data) {
                         if (data.message) {
                             Notify(data.type, data.message);
-                        }
-                        else {
+                        } else {
                             $("#usernameFormWrapper").html(data);
                             $.validator.unobtrusive.parse("#usernameForm");
                             usernameForm();
@@ -83,7 +80,7 @@ export default (function () {
         });
     }
 
-    function sendVerificationEmail() {
+    function sendVerificationEmail () {
         $("#sendVerificationEmail").click(function () {
             const button = $(this);
             $(button).prop("disabled", "disabled").addClass("disabled");
@@ -103,7 +100,7 @@ export default (function () {
         });
     }
 
-    function emailForm() {
+    function emailForm () {
         $("#emailInput").blur().focus();
 
         $("#emailForm").submit(function (e) {
@@ -118,8 +115,7 @@ export default (function () {
                     .done(function (data) {
                         if (!!data.message && !!data.type) {
                             Notify(data.type, data.message);
-                        }
-                        else {
+                        } else {
                             $("#emailFormWrapper").html(data);
                             $.validator.unobtrusive.parse("#emailForm");
                             emailForm();
@@ -135,5 +131,4 @@ export default (function () {
             }
         });
     }
-
 }());

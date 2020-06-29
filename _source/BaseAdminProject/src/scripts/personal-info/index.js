@@ -1,25 +1,24 @@
-﻿"use strict";
+"use strict";
 import "jquery-validation";
 import "jquery-validation-unobtrusive";
 import "jquery-mask-plugin";
-import { SetupValidator, InitCalendar } from '../common/common';
+import { SetupValidator, InitCalendar } from "../common/common";
 
 export default (function () {
-
     SetupValidator($.validator);
 
     $(function () {
         initPage();
     });
 
-    function initPage() {
+    function initPage () {
         initForm();
     }
 
-    function initForm() {
+    function initForm () {
         InitCalendar("#birthdayDate");
 
-        $("#personalInfoForm").submit(function (e) {
+        $("#personalInfoForm").submit(function () {
             const form = $(this);
             if (form.valid()) {
                 const submitButton = $(this).find("button[type='submit']");
@@ -28,5 +27,4 @@ export default (function () {
             }
         });
     }
-
 }());

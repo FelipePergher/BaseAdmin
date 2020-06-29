@@ -1,23 +1,22 @@
-﻿"use strict";
+"use strict";
 import "jquery-validation";
 import "jquery-validation-unobtrusive";
 import "datatables.net";
 import "datatables.net-bs4";
-import { DatatablesLanguage, Notify, SwalWithBootstrapButtons } from '../common/common';
+import { DatatablesLanguage, Notify, SwalWithBootstrapButtons } from "../common/common";
 
 export default (function () {
-
     $(function () {
         initPage();
     });
 
-    function initPage() {
+    function initPage () {
         initTable();
     }
 
-    function initTable() {
+    function initTable () {
         $.fn.dataTable.ext.search.push(
-            function (settings, data, dataIndex) {
+            function (settings, data) {
                 const showInactive = $("#showInactive").is(":checked");
                 const activeAccount = data[5];
                 if (activeAccount === "True" || showInactive) {
@@ -35,7 +34,7 @@ export default (function () {
             ajax: {
                 url: "/api/user/getAll",
                 type: "GET",
-                error: function (e) {
+                error: function () {
                     Notify("danger", "Não foi possível carregar as informações! <br> Se o problema persistir contate o administrador!");
                 }
             },
@@ -49,18 +48,18 @@ export default (function () {
                     name: "ConfirmedAccount",
                     searchable: false,
                     render: {
-                        "_": "plain",
-                        "filter": "filter",
-                        "display": "display"
+                        _: "plain",
+                        filter: "filter",
+                        display: "display"
                     }
                 },
                 {
                     data: "active",
                     name: "Active",
                     render: {
-                        "_": "plain",
-                        "filter": "filter",
-                        "display": "display"
+                        _: "plain",
+                        filter: "filter",
+                        display: "display"
                     }
                 },
                 {
@@ -68,40 +67,40 @@ export default (function () {
                     name: "BlockedAccount",
                     searchable: false,
                     render: {
-                        "_": "plain",
-                        "filter": "filter",
-                        "display": "display"
+                        _: "plain",
+                        filter: "filter",
+                        display: "display"
                     }
                 },
                 { data: "role", name: "Role" },
                 { data: "actions", name: "Actions", searchable: false }
             ],
-            drawCallback: function (settings) {
+            drawCallback: function () {
                 $(".enableUserButton").click(function () {
                     initChangeState($(this).data("url"), true);
                 });
 
-                $(".disableUserButton").click(function (e) {
+                $(".disableUserButton").click(function () {
                     initChangeState($(this).data("url"));
                 });
             }
         });
 
-        $("#showInactive").change(function() {
+        $("#showInactive").change(function () {
             $("#userDataTable").DataTable().ajax.reload(null, false);
         });
     }
 
-    function initChangeState(url, enable = false) {
+    function initChangeState (url, enable = false) {
         SwalWithBootstrapButtons.fire({
-            title: 'Você têm certeza?',
+            title: "Você têm certeza?",
             text: enable ? "O usuário receberá acesso ao sistema!" : "O usuário perderá o acesso ao sistema!",
-            type: 'warning',
+            type: "warning",
             showCancelButton: true,
             showLoaderOnConfirm: true,
             preConfirm: () => {
                 $.post(url)
-                    .done(function (data, textStatus) {
+                    .done(function (data) {
                         $("#userDataTable").DataTable().ajax.reload(null, false);
                         Notify("success", data);
                     }).fail(function (error) {

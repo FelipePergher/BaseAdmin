@@ -1,55 +1,55 @@
-﻿"use strict";
-import Swal from 'sweetalert2';
-import 'bootstrap-datepicker';
-import 'bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-br.min';
-import 'bootstrap4-notify';
+"use strict";
+import Swal from "sweetalert2";
+import "bootstrap-datepicker";
+import "bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-br.min";
+import "bootstrap4-notify";
 
-export function DatatablesLanguage() {
+export function DatatablesLanguage () {
     return {
-        "sEmptyTable": "Nenhum registro encontrado",
-        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-        "sInfoPostFix": "",
-        "sInfoThousands": ".",
-        "sLengthMenu": "_MENU_ resultados por página",
-        "sLoadingRecords": "Carregando...",
-        "sProcessing": "Processando...",
-        "sZeroRecords": "Nenhum registro encontrado",
-        "sSearch": "Pesquisar",
-        "paginate": {
-            "previous": "<i class='fas fa-angle-left'>",
-            "next": "<i class='fas fa-angle-right'>"
+        sEmptyTable: "Nenhum registro encontrado",
+        sInfo: "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+        sInfoEmpty: "Mostrando 0 até 0 de 0 registros",
+        sInfoFiltered: "(Filtrados de _MAX_ registros)",
+        sInfoPostFix: "",
+        sInfoThousands: ".",
+        sLengthMenu: "_MENU_ resultados por página",
+        sLoadingRecords: "Carregando...",
+        sProcessing: "Processando...",
+        sZeroRecords: "Nenhum registro encontrado",
+        sSearch: "Pesquisar",
+        paginate: {
+            previous: "<i class='fas fa-angle-left'>",
+            next: "<i class='fas fa-angle-right'>"
         },
-        "oAria": {
-            "sSortAscending": ": Ordenar colunas de forma ascendente",
-            "sSortDescending": ": Ordenar colunas de forma descendente"
+        oAria: {
+            sSortAscending: ": Ordenar colunas de forma ascendente",
+            sSortDescending: ": Ordenar colunas de forma descendente"
         }
     };
 }
 
-export function SetupValidator(validator) {
+export function SetupValidator (validator) {
     validator.setDefaults({
-        highlight: function highlight(element) {
+        highlight: function highlight (element) {
             if ($(element).prop("type") !== "checkbox") {
                 $(element).addClass("is-invalid").removeClass("is-valid").closest(".form-group").addClass("form-group-invalid").removeClass("form-group-valid");
             }
         },
         // eslint-disable-next-line object-shorthand
-        unhighlight: function unhighlight(element) {
+        unhighlight: function unhighlight (element) {
             if ($(element).prop("type") !== "checkbox") {
                 $(element).addClass("is-valid").removeClass("is-invalid").closest(".form-group").addClass("form-group-valid").removeClass("form-group-invalid");
             }
         },
         errorElement: "span",
-        errorPlacement: function errorPlacement(error, element) {
+        errorPlacement: function errorPlacement (error, element) {
             error.addClass("invalid-feedback");
             element.prop("type") === "checkbox" ? error.insertAfter(element.parent("label")) : error.insertAfter(element);
         }
     });
 }
 
-export function Select2Language() {
+export function Select2Language () {
     return {
         errorLoading: function () {
             return "Os resultados não puderam ser carregados.";
@@ -57,7 +57,7 @@ export function Select2Language() {
         inputTooLong: function (args) {
             var overChars = args.input.length - args.maximum;
 
-            var message = `Apague ${overChar} caracter`;
+            var message = `Apague ${overChars} caracter`;
 
             if (overChars !== 1) {
                 message += "es";
@@ -92,7 +92,7 @@ export function Select2Language() {
     };
 }
 
-export function EyePassword() {
+export function EyePassword () {
     $(".eyePassword").click(function () {
         const icon = $(this).find("i");
         const inputPassword = $(this).siblings("input");
@@ -106,7 +106,7 @@ export function EyePassword() {
     });
 }
 
-export function Notify(type, message) {
+export function Notify (type, message) {
     $.notify({
         message: message
     }, {
@@ -118,25 +118,25 @@ export function Notify(type, message) {
     });
 }
 
-export function InitCalendar(elementId) {
+export function InitCalendar (elementId) {
     $(elementId).datepicker({
         clearBtn: true,
         format: "dd/mm/yyyy",
         language: "pt-BR",
         templates: {
-            leftArrow: '<i class="fas fa-chevron-left"></i>',
-            rightArrow: '<i class="fas fa-chevron-right"></i>'
+            leftArrow: "<i class=\"fas fa-chevron-left\"></i>",
+            rightArrow: "<i class=\"fas fa-chevron-right\"></i>"
         }
     });
 }
 
 export const SwalWithBootstrapButtons = Swal.mixin({
     customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger"
     },
     buttonsStyling: false,
     reverseButtons: true,
-    confirmButtonText: 'Sim',
-    cancelButtonText: 'Não',
+    confirmButtonText: "Sim",
+    cancelButtonText: "Não"
 });

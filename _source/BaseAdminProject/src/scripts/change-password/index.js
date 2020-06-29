@@ -1,24 +1,23 @@
-﻿"use strict";
+"use strict";
 import "jquery-validation";
 import "jquery-validation-unobtrusive";
-import { SetupValidator, EyePassword } from '../common/common';
+import { SetupValidator, EyePassword } from "../common/common";
 
 export default (function () {
-
     SetupValidator($.validator);
 
     $(function () {
         initPage();
     });
 
-    function initPage() {
+    function initPage () {
         initChangePasswordForm();
     }
 
-    function initChangePasswordForm() {
+    function initChangePasswordForm () {
         EyePassword();
 
-        $("#changePasswordForm").submit(function (e) {
+        $("#changePasswordForm").submit(function () {
             const form = $(this);
             if (form.valid()) {
                 const submitButton = $(this).find("button[type='submit']");
@@ -27,6 +26,4 @@ export default (function () {
             }
         });
     }
-
 }());
-

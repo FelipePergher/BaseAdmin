@@ -1,22 +1,21 @@
-﻿"use strict";
+"use strict";
 import "jquery-validation";
 import "jquery-validation-unobtrusive";
-import { SetupValidator } from '../common/common';
+import { SetupValidator } from "../common/common";
 
 export default (function () {
-
     SetupValidator($.validator);
 
     $(function () {
         initPage();
     });
 
-    function initPage() {
+    function initPage () {
         initForgotForm();
     }
 
-    function initForgotForm() {
-        $("#forgotPasswordForm").submit(function (e) {
+    function initForgotForm () {
+        $("#forgotPasswordForm").submit(function () {
             const form = $(this);
             if (form.valid()) {
                 const submitButton = $(this).find("button[type='submit']");
@@ -25,5 +24,4 @@ export default (function () {
             }
         });
     }
-
 }());

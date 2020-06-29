@@ -1,4 +1,5 @@
-﻿"use strict";
+"use strict";
+//import "@babel/polyfill";
 import "./scss";
 import "bootstrap";
 import "./argon-template";

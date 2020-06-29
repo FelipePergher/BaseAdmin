@@ -1,13 +1,11 @@
-﻿"use strict";
+"use strict";
 
 export default (function () {
-
     $(function () {
         initPage();
     });
 
-    function initPage() {
+    function initPage () {
 
     }
-
 }());
