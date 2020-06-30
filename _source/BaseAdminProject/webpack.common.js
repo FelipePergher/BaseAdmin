@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const glob = require("glob");
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
+const StylelintPlugin = require('stylelint-webpack-plugin');
 var fs = require('fs');
 var appBasePath = './src/scripts/';
 
@@ -26,6 +27,7 @@ module.exports = {
             "window.jQuery": "jquery"
         }),
         new FixStyleOnlyEntriesPlugin(),
+        new StylelintPlugin()
     ],
     output: {
         filename: 'js/[name].bundle.js',
@@ -34,6 +36,12 @@ module.exports = {
     },
     module: {
         rules: [
+            {
+                enforce: 'pre',
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'eslint-loader',
+            },
             {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',

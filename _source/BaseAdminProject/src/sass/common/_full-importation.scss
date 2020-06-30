@@ -1,18 +1,21 @@
-﻿@import "base";
+@import "base";
 
 // Bootstrap components
 @import "bootstrap/scss/root";
 @import "bootstrap/scss/reboot";
 @import "bootstrap/scss/type";
-/*@import "bootstrap/scss/images";*/
-/*@import "bootstrap/scss/code";*/
+
+/* @import "bootstrap/scss/images"; */
+
+/* @import "bootstrap/scss/code"; */
 @import "bootstrap/scss/grid";
 @import "bootstrap/scss/tables";
 @import "bootstrap/scss/forms";
 @import "bootstrap/scss/buttons";
 @import "bootstrap/scss/transitions";
 @import "bootstrap/scss/dropdown";
-/*@import "bootstrap/scss/button-group";*/
+
+/* @import "bootstrap/scss/button-group"; */
 @import "bootstrap/scss/input-group";
 @import "bootstrap/scss/custom-forms";
 @import "bootstrap/scss/nav";
@@ -21,23 +24,30 @@
 @import "bootstrap/scss/breadcrumb";
 @import "bootstrap/scss/pagination";
 @import "bootstrap/scss/badge";
-/*@import "bootstrap/scss/jumbotron";*/
+
+/* @import "bootstrap/scss/jumbotron"; */
 @import "bootstrap/scss/alert";
-/*@import "bootstrap/scss/progress";*/
+
+/* @import "bootstrap/scss/progress"; */
 @import "bootstrap/scss/media";
 @import "bootstrap/scss/list-group";
 @import "bootstrap/scss/close";
-/*@import "bootstrap/scss/modal";*/
-/*@import "bootstrap/scss/tooltip";*/
-/*@import "bootstrap/scss/popover";*/
-/*@import "bootstrap/scss/carousel";*/
+
+/* @import "bootstrap/scss/modal"; */
+
+/* @import "bootstrap/scss/tooltip"; */
+
+/* @import "bootstrap/scss/popover"; */
+
+/* @import "bootstrap/scss/carousel"; */
 @import "bootstrap/scss/utilities";
-/*@import "bootstrap/scss/print";*/
+
+/* @import "bootstrap/scss/print"; */
 @import "bootstrap/scss/spinners";
 
 // Argon components
-/*@import '@creative-tim-official/argon-dashboard-free/assets/scss/custom/components';*/
 
+/* @import '@creative-tim-official/argon-dashboard-free/assets/scss/custom/components'; */
 
 // Alerts
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/alerts/alert";
@@ -65,13 +75,15 @@
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/cards/card-stats";
 
 // Charts
-/*@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/charts/chart";*/
+
+/* @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/charts/chart"; */
 
 // Close
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/close/close";
 
 // Collapse
-/*@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/collapse/accordion";*/
+
+/* @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/collapse/accordion"; */
 
 // Content
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/content/main-content";
@@ -87,7 +99,8 @@
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/dropdowns/dropdown";
 
 // Footers
-/*@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/footers/footer";*/
+
+/* @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/footers/footer"; */
 
 // Forms
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/forms/form";
@@ -108,13 +121,15 @@
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/list-groups/list-group";
 
 // Maps
-/*@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/maps/map";*/
+
+/* @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/maps/map"; */
 
 // Masks
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/masks/mask";
 
 // Modals
-/*@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/modals/modal";*/
+
+/* @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/modals/modal"; */
 
 // Navbars
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/navbars/navbar";
@@ -132,31 +147,29 @@
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/paginations/pagination";
 
 // Popovers
-/*@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/popovers/popover";*/
+
+/* @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/popovers/popover"; */
 
 // Progresses
-/*@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/progresses/progress";*/
+
+/* @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/progresses/progress"; */
 
 // Separators
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/separators/separator";
 
 // Sections
-/*@import "@creative-tim-official/argon-dashboard-free/assets/scss/core/sections/nucleo-icons";*/
 
-
+/* @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/sections/nucleo-icons"; */
 
 // Type
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/type/type";
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/type/article";
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/type/display";
 @import "@creative-tim-official/argon-dashboard-free/assets/scss/core/type/heading";
-
 @import '@creative-tim-official/argon-dashboard-free/assets/scss/custom/utilities';
-
 @import '~@creative-tim-official/argon-dashboard-free/assets/vendor/animate.css/animate.min.css';
 
-
-/*@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/bootstrap-datepicker';
+/* @import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/bootstrap-datepicker';
 @import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/bootstrap-tagsinput';
 @import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/chartjs';
 @import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/dropzone';
@@ -168,4 +181,4 @@
 @import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/scrollbar';
 @import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/select2';
 @import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/sweet-alert-2';
-@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/plugin-datetimepicker';*/
+@import '@creative-tim-official/argon-dashboard-free/assets/scss/core/vendors/plugin-datetimepicker'; */
