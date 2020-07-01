@@ -146,7 +146,7 @@ namespace BaseAdminProject
                 .FormActions(s => s.Self())
                 .FrameAncestors(s => s.Self())
                 .ImageSources(s => s.Self().CustomSources("via.placeholder.com", "data:"))
-                .ScriptSources(s => s.Self()));
+                .ScriptSources(s => s.Self().UnsafeInline().UnsafeEval()));
 
             CultureInfo[] supportedCultures =
             {
