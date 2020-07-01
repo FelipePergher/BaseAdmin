@@ -178,24 +178,23 @@ namespace BaseAdminProject
             app.UseAuthentication();
             app.UseAuthorization();
 
-            if (!env.IsProduction())
+            // Allowing access at this moment
+            // if (!env.IsProduction())
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
             {
-                // Enable middleware to serve generated Swagger as a JSON endpoint.
-                app.UseSwagger();
-
-                // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
-                app.UseSwaggerUI(c =>
+                foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
                 {
-                    foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
-                    {
-                        c.SwaggerEndpoint(
-                            $"/swagger/{description.GroupName}/swagger.json",
-                            description.GroupName.ToUpperInvariant());
-                    }
+                    c.SwaggerEndpoint(
+                        $"/swagger/{description.GroupName}/swagger.json",
+                        description.GroupName.ToUpperInvariant());
+                }
 
-                    c.DocExpansion(DocExpansion.List);
-                });
-            }
+                c.DocExpansion(DocExpansion.List);
+            });
 
             app.UseEndpoints(endpoints =>
             {

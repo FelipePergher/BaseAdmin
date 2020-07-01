@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace BaseAdminProject.Controllers.Api
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Authorize(Roles = Roles.Admin)]
     [ApiController]
     public class UserApiController : ControllerBase
