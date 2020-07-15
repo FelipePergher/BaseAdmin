@@ -20,5 +20,7 @@ namespace BaseAdminProject.Data.Models
         public string Name { get; set; }
 
         public DateTime BirthdayDate { get; set; }
+
+        public BaseAdminUser BaseAdminUser { get; set; }
     }
 }

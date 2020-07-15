@@ -142,11 +142,11 @@ namespace BaseAdminProject
             app.UseCsp(opts => opts
                 .BlockAllMixedContent()
                 .StyleSources(s => s.Self().UnsafeInline().CustomSources("fonts.googleapis.com", "fonts.gstatic.com"))
-                .FontSources(s => s.Self().CustomSources("fonts.googleapis.com", "fonts.gstatic.com", "data:"))
+                .FontSources(s => s.Self().CustomSources("fonts.googleapis.com", "fonts.gstatic.com", "data:", "use.typekit.net"))
                 .FormActions(s => s.Self())
                 .FrameAncestors(s => s.Self())
-                .ImageSources(s => s.Self().CustomSources("via.placeholder.com", "data:"))
-                .ScriptSources(s => s.Self().UnsafeInline().UnsafeEval()));
+                .ImageSources(s => s.Self().CustomSources("data:"))
+                .ScriptSources(s => s.Self().UnsafeInline().UnsafeEval().CustomSources("ajax.cloudflare.com")));
 
             CultureInfo[] supportedCultures =
             {
