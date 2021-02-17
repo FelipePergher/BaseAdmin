@@ -1,6 +1,9 @@
-﻿const merge = require('webpack-merge');
+﻿const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PurgeCSSPlugin = require('purgecss-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const glob = require("glob");
 const path = require('path');
 
@@ -9,15 +12,22 @@ module.exports = merge(common, {
     devtool: false,
     stats: { modules: false },
     optimization: {
+        minimize: true,
         minimizer: [
-            new UglifyJsPlugin({
-                cache: true,
-                parallel: true,
-                sourceMap: true // set to true if you want JS source maps
+            new TerserPlugin({
+                parallel: true
             }),
+            new OptimizeCSSAssetsPlugin()
         ]
     },
     plugins: [
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
+        }),
+        new PurgeCSSPlugin({
+            paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
+        })
     ],
     module: {
         rules: [

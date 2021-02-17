@@ -25,6 +25,7 @@ using SixLabors.ImageSharp.Web.Processors;
 using SixLabors.ImageSharp.Web.Providers;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using System;
 using System.Globalization;
 
 namespace BaseAdminProject
@@ -41,12 +42,12 @@ namespace BaseAdminProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddImageSharpCore(
+            services.AddImageSharp(
                     options =>
                     {
                         options.Configuration = SixLabors.ImageSharp.Configuration.Default;
-                        options.MaxBrowserCacheDays = 7;
-                        options.MaxCacheDays = 365;
+                        options.BrowserMaxAge = TimeSpan.FromDays(7);
+                        options.CacheMaxAge = TimeSpan.FromDays(365);
                         options.CachedNameLength = 8;
                     })
                 .SetRequestParser<QueryCollectionRequestParser>()

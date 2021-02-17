@@ -2,11 +2,11 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
-const glob = require("glob");
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 const StylelintPlugin = require('stylelint-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 var fs = require('fs');
-var appBasePath = './src/scripts/';
+var appBasePath = './scripts/';
 
 var jsEntries = {};
 // We search for index.js files inside basePath folder and make those as entries
@@ -27,21 +27,16 @@ module.exports = {
             "window.jQuery": "jquery"
         }),
         new FixStyleOnlyEntriesPlugin(),
-        new StylelintPlugin()
+        new StylelintPlugin(),
+        new ESLintPlugin()
     ],
     output: {
         filename: 'js/[name].bundle.js',
-        path: path.resolve(__dirname, 'wwwroot/dist'),
+        path: path.resolve(__dirname, '../wwwroot/dist'),
         publicPath: '/'
     },
     module: {
         rules: [
-            {
-                enforce: 'pre',
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'eslint-loader',
-            },
             {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',
@@ -49,10 +44,20 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: "style-loader!css-loader",
-                options: {
-                    minimize: true || {/* or CSSNano Options */ }
-                }
+                use: [
+                    {
+                        loader: "style-loader",
+                        options: {
+                            minimize: true || {/* or CSSNano Options */ }
+                        }
+                    },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            minimize: true || {/* or CSSNano Options */ }
+                        }
+                    }
+                ]
             },
             {
                 test: /\.js$/,
@@ -73,7 +78,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                test: /\.(eot|svg|ttf|woff|woff2|otf)$/,
                 use: [{
                     loader: 'url-loader',
                     options: {

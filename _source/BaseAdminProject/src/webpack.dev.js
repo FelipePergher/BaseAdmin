@@ -1,7 +1,8 @@
-﻿const merge = require('webpack-merge');
+﻿const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const glob = require("glob");
 const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = merge(common, {
     mode: 'development',
@@ -9,7 +10,9 @@ module.exports = merge(common, {
     devServer: {
         hot: true
     },
-    plugins: [],
+    plugins: [
+        new BundleAnalyzerPlugin()
+    ],
     module: {
         rules: [{
             test: /\.scss$/,
