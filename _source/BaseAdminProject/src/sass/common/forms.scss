@@ -1,46 +1,46 @@
 @import "~bootstrap/scss/_variables";
 
 .invalid-feedback {
-	display: block;
+    display: block;
 }
 
 .eye-password {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 [data-notify="container"] {
-	width: calc(100% - 30px) !important;
-	max-width: 600px !important;
+    width: calc(100% - 30px) !important;
+    max-width: 600px !important;
 }
 
 .form-group-invalid {
-	.input-group-text {
-		border-color: $danger;
-	}
+    .input-group-text {
+        border-color: $danger;
+    }
 }
 
 .form-group-valid {
-	.input-group-text {
-		border-color: $success;
-	}
+    .input-group-text {
+        border-color: $success;
+    }
 }
 
 .validation-summary-errors {
-	font-size: 80%;
-	color: $danger;
+    font-size: 80%;
+    color: $danger;
 
-	ul {
-		list-style: none;
-		padding: 15px;
-		padding-left: 0;
-		background-color: rgba($danger, 0.1);
-	}
+    ul {
+        list-style: none;
+        padding: 15px;
+        padding-left: 0;
+        background-color: rgba($danger, 0.1);
+    }
 }
 
 .input-group {
-	&--disabled {
-		span {
-			background-color: #e9ecef;
-		}
-	}
+    &--disabled {
+        span {
+            background-color: #e9ecef;
+        }
+    }
 }

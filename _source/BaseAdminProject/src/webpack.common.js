@@ -5,13 +5,14 @@ const webpack = require('webpack');
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 const StylelintPlugin = require('stylelint-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
-var fs = require('fs');
-var appBasePath = './scripts/';
+var fs = require("fs");
+var appBasePath = "./scripts/";
 
 var jsEntries = {};
 // We search for index.js files inside basePath folder and make those as entries
 fs.readdirSync(appBasePath).forEach(function (name) {
-    var indexFile = `${appBasePath}${name}/index.js`;
+    var indexFile = appBasePath + name + '/index.js';
+
     if (fs.existsSync(indexFile)) {
         jsEntries[name] = indexFile;
     }
@@ -82,7 +83,8 @@ module.exports = {
                 use: [{
                     loader: 'url-loader',
                     options: {
-                        name: 'fonts/[hash]-[name].[ext]'
+                        name: 'fonts/[hash]-[name].[ext]',
+                        esModule: false
                     }
                 }]
             },

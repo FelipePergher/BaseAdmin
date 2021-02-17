@@ -2,10 +2,14 @@
 const common = require('./webpack.common.js');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const PurgeCSSPlugin = require('purgecss-webpack-plugin')
+const PurgeCSSPlugin = require('purgecss-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const glob = require("glob");
 const path = require('path');
+
+const PATHS = {
+    src: path.join(__dirname, 'src')
+}
 
 module.exports = merge(common, {
     mode: 'production',
@@ -17,7 +21,7 @@ module.exports = merge(common, {
             new TerserPlugin({
                 parallel: true
             }),
-            new OptimizeCSSAssetsPlugin()
+            //new OptimizeCSSAssetsPlugin()
         ]
     },
     plugins: [
@@ -32,13 +36,19 @@ module.exports = merge(common, {
     module: {
         rules: [
             {
+                test: /\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader"
+                ]
+            },
+            {
                 test: /\.scss$/,
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
                             name: 'css/[folder].bundle.css'
-
                         }
                     },
                     {
