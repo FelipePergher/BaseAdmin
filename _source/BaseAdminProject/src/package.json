@@ -47,7 +47,7 @@
   "dependencies": {
     "@babel/polyfill": "7.12.1",
     "@creative-tim-official/argon-dashboard-free": "1.2.0",
-    "@fortawesome/fontawesome-free": "5.15.2",
+    "@fortawesome/fontawesome-free": "5.15.4",
     "argon-dashboard": "1.2.0",
     "bootstrap": "4.5.0",
     "bootstrap-datepicker": "1.9.0",
